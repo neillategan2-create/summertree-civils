@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summertree Civils — Quote &amp; Cost System</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f4;color:#1a1a2e;min-height:100vh}
+
+/* TOP BAR */
+.topbar{background:#1a1a2e;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:14px 32px}
+.topbar h1{font-size:19px;font-weight:700;letter-spacing:1px}
+.topbar p{font-size:11px;color:#8892b0;margin-top:2px}
+.topbar-right{font-size:11px;color:#ccd6f6;text-align:right;line-height:1.9}
+
+/* TABS */
+nav{background:#0f172a;display:flex;padding:0 32px;border-bottom:1px solid #1e293b}
+.ntab{padding:13px 20px;font-size:13px;font-weight:500;color:#94a3b8;cursor:pointer;border-bottom:3px solid transparent;transition:.15s;user-select:none}
+.ntab:hover{color:#e2e8f0}
+.ntab.active{color:#38bdf8;border-bottom-color:#38bdf8}
+
+main{padding:28px 32px;max-width:1350px;margin:0 auto}
+.panel{display:none}.panel.active{display:block}
+.card{background:#fff;border-radius:10px;box-shadow:0 1px 14px rgba(0,0,0,.08);padding:40px}
+
+/* ── QUOTE ── */
+.qh{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:30px;padding-bottom:22px;border-bottom:3px solid #1a1a2e}
+.qlogo{display:flex;align-items:center;gap:14px}
+.logo-box{width:54px;height:54px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-box svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.qcname{font-size:19px;font-weight:700}
+.qcreg{font-size:11px;color:#64748b;margin-top:2px}
+.qcontact{text-align:right;font-size:12px;color:#475569;line-height:2}
+.qcontact strong{color:#1e293b}
+
+.badge{display:inline-block;background:#1a1a2e;color:#fff;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 14px;border-radius:4px;margin-bottom:18px}
+.qmeta{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;font-size:13px;margin-bottom:26px}
+.qrow{display:flex;gap:8px;padding:3px 0}
+.ql{font-weight:600;color:#374151;min-width:90px}
+.qv{color:#4b5563}
+
+.qt{width:100%;border-collapse:collapse;font-size:13px}
+.qt thead tr{background:#1a1a2e;color:#fff}
+.qt th{padding:10px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.5px}
+.qt th:not(:first-child){text-align:right}
+.qt td{padding:8px 10px;border-bottom:1px solid #f1f5f9}
+.qt td:not(:first-child){text-align:right}
+.qt .sh td{background:#f1f5f9;font-weight:700;color:#1e293b;padding:10px;border-top:2px solid #cbd5e1}
+.qt .wh td{font-weight:700;color:#1a1a2e;padding:14px 10px 4px;border-bottom:none;font-size:14px}
+.qt .sub td{color:#64748b;font-style:italic;font-size:12px;padding:2px 10px 10px;border-bottom:none}
+.qt tr:hover:not(.sh):not(.wh):not(.sub){background:#f8fafc}
+
+.qtotals{margin-top:22px;display:flex;justify-content:flex-end}
+.qtinner{min-width:400px;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden}
+.trow{display:flex;justify-content:space-between;padding:10px 18px;font-size:13px;border-bottom:1px solid #e2e8f0}
+.trow:last-child{border-bottom:none}
+.trow.grand{background:#1a1a2e;color:#fff;font-weight:700;font-size:16px;padding:14px 18px}
+.trow .tl{color:#475569;font-weight:500}.trow.grand .tl{color:#94a3b8}
+.trow .tv{font-weight:600}
+
+.qfooter{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.terms{font-size:12px;color:#64748b;line-height:2.2;list-style:disc;padding-left:18px}
+.bank{background:#f8fafc;border-left:4px solid #1a1a2e;padding:16px;border-radius:0 6px 6px 0}
+.bank h4{font-size:12px;font-weight:700;color:#1a1a2e;margin-bottom:8px;letter-spacing:.5px}
+.bank p{font-size:12px;color:#475569;line-height:2}
+.sigrow{margin-top:38px;display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.sigline{border-top:1px solid #94a3b8;padding-top:6px;font-size:11px;color:#94a3b8}
+
+/* ── ALLOWABLES ── */
+.allow-hd h2{font-size:19px;font-weight:700;margin-bottom:6px}
+.allow-hd p{font-size:13px;color:#64748b;margin-bottom:20px}
+.callout{padding:13px 18px;border-radius:8px;font-size:13px;border-left:4px solid #3b82f6;background:#eff6ff;color:#1e40af;margin-bottom:22px;line-height:1.6}
+.callout strong{font-weight:700}
+
+.at{width:100%;border-collapse:collapse;font-size:12px}
+.at th{background:#1e293b;color:#e2e8f0;padding:10px 7px;font-size:11px;font-weight:600;text-align:center;white-space:nowrap;border:1px solid #334155}
+.at th:first-child{text-align:left;min-width:190px}
+.at td{padding:8px 7px;border-bottom:1px solid #f1f5f9;text-align:center}
+.at td:first-child{text-align:left}
+.at .asr td{background:#f1f5f9;font-weight:700;color:#1e293b}
+.at .aex td{background:#fffbeb;color:#92400e;font-style:italic;font-size:11px}
+.at .asum td{background:#1a1a2e;color:#fff;font-weight:700;padding:12px 7px}
+.chk{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:12px;line-height:20px;text-align:center;font-weight:700}
+.ok{background:#dcfce7;color:#166534}.fail{background:#fee2e2;color:#991b1b}
+
+.scards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:22px}
+.sc{background:#1a1a2e;color:#fff;border-radius:8px;padding:16px;text-align:center}
+.sc-label{font-size:11px;color:#94a3b8;margin-bottom:8px;line-height:1.4}
+.sc-value{font-size:17px;font-weight:700}
+.sc-value.g{color:#4ade80}.sc-value.b{color:#38bdf8}
+
+/* ── DAILY SHEET ── */
+.ds{max-width:860px;margin:0 auto}
+.dsh{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:14px;border-bottom:3px solid #1a1a2e;margin-bottom:20px}
+.dstitle h2{font-size:18px;font-weight:700;color:#1a1a2e;text-align:right;line-height:1.25}
+.dsfields{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
+.dsf{display:flex;flex-direction:column;gap:4px}
+.dsf label{font-size:10px;font-weight:700;color:#374151;letter-spacing:.8px;text-transform:uppercase}
+.dsf input{border:none;border-bottom:1.5px solid #374151;padding:6px 2px;font-size:13px;outline:none;background:transparent;font-family:inherit}
+.dsf input:focus{border-bottom-color:#38bdf8}
+
+.dsbar{background:#1a1a2e;color:#fff;padding:8px 12px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-align:center;border-radius:4px 4px 0 0}
+.dsdiary{width:100%;min-height:76px;border:1px solid #cbd5e1;border-top:none;border-radius:0 0 4px 4px;padding:10px;font-size:13px;resize:vertical;outline:none;font-family:inherit;margin-bottom:20px}
+.dsdiary:focus{border-color:#38bdf8}
+
+.dstw{margin-bottom:20px}
+.dst{width:100%;border-collapse:collapse;font-size:12px}
+.dst th{background:#334155;color:#e2e8f0;padding:9px 6px;font-size:11px;font-weight:700;text-align:center;border:1px solid #475569}
+.dst th:first-child{text-align:left}
+.dst td{padding:6px 4px;border:1px solid #e2e8f0;text-align:center}
+.dst td:first-child{text-align:left}
+.dst td input{width:100%;border:none;text-align:center;font-size:12px;outline:none;padding:2px 4px;background:transparent;font-family:inherit}
+.dst td:first-child input{text-align:left}
+.dst .tr td{background:#f1f5f9;font-weight:700}
+.tlabel{text-align:right!important;padding-right:12px!important;font-size:11px}
+
+.dssummary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.dsi{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:7px;font-size:13px}
+.dsi-label{font-weight:600}.dsi-value{font-size:16px;font-weight:700}
+.c-la{background:#ecfdf5;color:#065f46}
+.c-pa{background:#f0fdf4;color:#14532d}
+.c-lc{background:#eff6ff;color:#1e40af}
+.c-pr{background:#f0fdf4;color:#14532d}
+.c-lo{background:#fff1f2;color:#881337}
+
+@media(max-width:900px){
+  main{padding:14px}
+  .card{padding:20px}
+  .scards{grid-template-columns:repeat(2,1fr)}
+  .qfooter,.dsfields{grid-template-columns:1fr}
+}
+@media print{
+  nav,.topbar{display:none}
+  .panel{display:block!important;page-break-after:always}
+  .card{box-shadow:none;border:1px solid #ddd}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div>
+    <h1>SUMMERTREE CIVILS</h1>
+    <p>Civil Engineering &amp; Paving — Quotation &amp; Cost Management</p>
+  </div>
+  <div class="topbar-right">
+    CK 2016/304170/07 &bull; VAT No 471 027 4319<br>
+    P.O. Box 110, Jeffreys Bay &bull; Tel: 072 263 4470 &bull; waldo@summertree.org.za
+  </div>
+</header>
+
+<nav>
+  <div class="ntab active" data-tab="quote">&#x1F4C4; Quote</div>
+  <div class="ntab" data-tab="allowables">&#x1F4CA; Allowables</div>
+  <div class="ntab" data-tab="daily">&#x1F4CB; Daily Site Sheet</div>
+</nav>
+
+<main>
+
+<!-- ═══════════════════ QUOTE ═══════════════════ -->
+<div id="tab-quote" class="panel active">
+<div class="card">
+
+  <div class="qh">
+    <div class="qlogo">
+      <div class="logo-box">
+        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div>
+        <div class="qcname">Summertree Civils</div>
+        <div class="qcreg">CK 2016/304170/07 &bull; VAT No 471 027 4319</div>
+      </div>
+    </div>
+    <div class="qcontact">
+      P.O. Box 110, Jeffreys Bay<br>
+      Tel: 072 263 4470<br>
+      waldo@summertree.org.za<br>
+      <strong>From: Waldo van Niekerk</strong>
+    </div>
+  </div>
+
+  <div class="badge">ESTIMATE</div>
+
+  <div class="qmeta">
+    <div>
+      <div class="qrow"><span class="ql">CLIENT:</span><span class="qv">Jbay Golf Club</span></div>
+      <div class="qrow"><span class="ql">SITE:</span><span class="qv">Jbay Golf Club</span></div>
+    </div>
+    <div>
+      <div class="qrow"><span class="ql">ATTENTION:</span><span class="qv">Okkie Esterhuizen</span></div>
+      <div class="qrow"><span class="ql">DATE:</span><span class="qv">2026/04/02</span></div>
+    </div>
+  </div>
+
+  <table class="qt">
+    <thead>
+      <tr>
+        <th style="width:46%">DESCRIPTION</th>
+        <th style="width:7%">UNIT</th>
+        <th style="width:10%">QUANTITY</th>
+        <th style="width:13%">RATE</th>
+        <th style="width:14%">AMOUNT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="wh"><td colspan="5">WORK TO BE CARRIED OUT</td></tr>
+      <tr class="sub"><td colspan="5">Paving walkways</td></tr>
+
+      <tr class="sh"><td colspan="5">GREEN SECTION</td></tr>
+      <tr><td>Prep &amp; compact area for paving</td><td>m²</td><td>72.00</td><td>R 26.50</td><td>R 1,908.00</td></tr>
+      <tr><td>Supply &amp; install 60mm interlocking paving</td><td>m²</td><td>72.00</td><td>R 321.18</td><td>R 23,124.96</td></tr>
+      <tr><td>Install border on concrete</td><td>m</td><td>72.00</td><td>R 21.20</td><td>R 1,526.40</td></tr>
+
+      <tr class="sh"><td colspan="5">ORANJE SECTION</td></tr>
+      <tr><td>Prep &amp; compact area for paving</td><td>m²</td><td>152.00</td><td>R 26.50</td><td>R 4,028.00</td></tr>
+      <tr><td>Supply &amp; install 60mm interlocking paving</td><td>m²</td><td>152.00</td><td>R 321.18</td><td>R 48,819.36</td></tr>
+      <tr><td>Install border on concrete</td><td>m</td><td>304.00</td><td>R 21.20</td><td>R 6,444.80</td></tr>
+
+      <tr class="sh"><td colspan="5">CART PARKING SECTION</td></tr>
+      <tr><td>Prep &amp; compact area for paving</td><td>m²</td><td>282.00</td><td>R 26.50</td><td>R 7,473.00</td></tr>
+      <tr><td>Supply &amp; install 60mm interlocking paving</td><td>m²</td><td>282.00</td><td>R 321.18</td><td>R 90,572.76</td></tr>
+      <tr><td>Install border on concrete</td><td>m</td><td>220.00</td><td>R 21.20</td><td>R 4,664.00</td></tr>
+
+      <tr class="sh"><td colspan="5">RED &amp; YELLOW SECTION</td></tr>
+      <tr><td>Prep &amp; compact area for paving</td><td>m²</td><td>325.00</td><td>R 26.50</td><td>R 8,612.50</td></tr>
+      <tr><td>Supply &amp; install 50mm beveled paving</td><td>m²</td><td>325.00</td><td>R 293.62</td><td>R 95,426.50</td></tr>
+      <tr><td>Install border on concrete</td><td>m</td><td>375.00</td><td>R 21.20</td><td>R 7,950.00</td></tr>
+    </tbody>
+  </table>
+
+  <div class="qtotals">
+    <div class="qtinner">
+      <div class="trow"><span class="tl">Total Value of Work to Date</span><span class="tv">R 300,550.28</span></div>
+      <div class="trow"><span class="tl">Allow 10% Contingencies</span><span class="tv" style="color:#94a3b8">—</span></div>
+      <div class="trow"><span class="tl">Sub Total</span><span class="tv">R 300,550.28</span></div>
+      <div class="trow"><span class="tl">Add VAT 15%</span><span class="tv">R 45,082.54</span></div>
+      <div class="trow grand"><span class="tl">TOTAL OFFER AMOUNT</span><span class="tv">R 345,632.82</span></div>
+    </div>
+  </div>
+
+  <div class="qfooter">
+    <ul class="terms">
+      <li>50% deposit required on acceptance of the quotation</li>
+      <li>All materials used remain the property of Summertree Civils until account is paid in full</li>
+    </ul>
+    <div class="bank">
+      <h4>BANK DETAILS</h4>
+      <p>Summertree Civils<br>FNB — Jeffreys Bay<br>Branch: 210515<br>Acc: 62 853 125 104</p>
+    </div>
+  </div>
+
+  <div class="sigrow">
+    <div><div class="sigline">Accepted by client: ___________________________</div></div>
+    <div><div class="sigline">Date: ___________________________</div></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════ ALLOWABLES ═══════════════════ -->
+<div id="tab-allowables" class="panel">
+<div class="card">
+  <div class="allow-hd">
+    <h2>Company Allowables — Internal Cost Breakdown</h2>
+    <p>Per-unit cost build-up for each operation. <strong>Rule: Allowable Total &times; (1 + Markup%) = Customer Rate.</strong> Validation column confirms every line item.</p>
+  </div>
+  <div class="callout">
+    <strong>Validation:</strong> The customer's rate per m² (or m) is derived by marking up the internal allowable total. These two figures must be identical — if they drift, the quote either underprices the work (loss) or prices itself out of the contract. Green ✓ = confirmed match.
+  </div>
+  <table class="at">
+    <thead>
+      <tr>
+        <th>DESCRIPTION</th><th>UNIT</th><th>QTY</th>
+        <th>LABOUR<br>/unit</th><th>TRANSPORT<br>P&amp;G /unit</th><th>MATERIAL<br>/unit</th><th>PLANT<br>/unit</th>
+        <th>ALLOWABLE<br>TOTAL /unit</th><th>MARKUP</th><th>CUSTOMER<br>RATE /unit</th>
+        <th>PROFIT<br>/unit</th><th>VALID?</th>
+      </tr>
+    </thead>
+    <tbody id="a-body"></tbody>
+  </table>
+  <div class="scards" id="scards"></div>
+</div>
+</div>
+
+<!-- ═══════════════════ DAILY SHEET ═══════════════════ -->
+<div id="tab-daily" class="panel">
+<div class="card ds">
+
+  <div class="dsh">
+    <div class="qlogo">
+      <div class="logo-box">
+        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div><div class="qcname">Summertree Civils</div></div>
+    </div>
+    <div class="dstitle"><h2>DAILY PLANT<br>&amp; LABOUR COST</h2></div>
+  </div>
+
+  <div class="dsfields">
+    <div class="dsf"><label>Supervisor</label><input type="text" placeholder="Name"/></div>
+    <div class="dsf"><label>Contract #</label><input type="text" value="451"/></div>
+    <div class="dsf"><label>Date</label><input type="date"/></div>
+  </div>
+
+  <div class="dsbar">DIARY</div>
+  <textarea class="dsdiary" placeholder="Daily notes and observations…"></textarea>
+
+  <div class="dstw">
+    <div class="dsbar">DAILY ALLOWABLES</div>
+    <table class="dst">
+      <thead>
+        <tr>
+          <th style="width:28%">OPERATION</th><th style="width:20%">PRODUCT</th>
+          <th>LABOUR<br>ALLOW</th><th>LABOUR<br>TOTAL</th>
+          <th>PLANT<br>ALLOW</th><th>PLANT<br>TOTAL</th>
+        </tr>
+      </thead>
+      <tbody id="da-body"></tbody>
+      <tfoot>
+        <tr class="tr">
+          <td colspan="2" class="tlabel">&#9312; TOTAL (Labour Allow)</td>
+          <td colspan="2" id="da-la" style="color:#065f46;font-size:14px"></td>
+          <td colspan="2"></td>
+        </tr>
+        <tr class="tr">
+          <td colspan="2" class="tlabel">&#9313; TOTAL (Plant Allow)</td>
+          <td colspan="2"></td>
+          <td colspan="2" id="da-pa" style="color:#065f46;font-size:14px"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="dstw">
+    <div class="dsbar">LABOUR COST</div>
+    <table class="dst">
+      <thead>
+        <tr>
+          <th style="width:36%">LABOUR</th><th>QTY</th><th>HRS</th><th>RATE</th><th>SUB-TOTAL</th>
+        </tr>
+      </thead>
+      <tbody id="lc-body"></tbody>
+      <tfoot>
+        <tr class="tr">
+          <td colspan="4" class="tlabel">&#9314; TOTAL LABOUR COST</td>
+          <td id="lc-total" style="color:#1e40af;font-size:14px"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="dssummary">
+    <div class="dsi c-la"><span class="dsi-label">&#9312; Daily Labour Allowable</span><span class="dsi-value" id="ds-la">R 0.00</span></div>
+    <div class="dsi c-pa"><span class="dsi-label">&#9313; Daily Plant Allowable</span><span class="dsi-value" id="ds-pa">R 0.00</span></div>
+    <div class="dsi c-lc"><span class="dsi-label">&#9314; Daily Labour Cost</span><span class="dsi-value" id="ds-lc">R 0.00</span></div>
+    <div class="dsi c-pr"><span class="dsi-label">PROFIT</span><span class="dsi-value" id="ds-profit">R 0.00</span></div>
+    <div class="dsi c-lo"><span class="dsi-label">LOSS</span><span class="dsi-value" id="ds-loss">R 0.00</span></div>
+  </div>
+
+</div>
+</div>
+
+</main>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+const SECTIONS = [
+  { name: "GREEN SECTION", items: [
+    { desc: "Prep & compact area for paving",            unit:"m²", qty:72,  l:25,  t:0,  m:0,   p:0, mk:0.06 },
+    { desc: "Supply & install 60mm interlocking paving", unit:"m²", qty:72,  l:100, t:20, m:183, p:0, mk:0.06 },
+    { desc: "Install border on concrete",                unit:"m",  qty:72,  l:20,  t:0,  m:0,   p:0, mk:0.06 }
+  ]},
+  { name: "ORANJE SECTION", items: [
+    { desc: "Prep & compact area for paving",            unit:"m²", qty:152, l:25,  t:0,  m:0,   p:0, mk:0.06 },
+    { desc: "Supply & install 60mm interlocking paving", unit:"m²", qty:152, l:100, t:20, m:183, p:0, mk:0.06 },
+    { desc: "Install border on concrete",                unit:"m",  qty:304, l:20,  t:0,  m:0,   p:0, mk:0.06 }
+  ]},
+  { name: "CART PARKING SECTION", extra:{ label:"Section material allowance", kind:"Material", amt:920, mk:0.06 }, items: [
+    { desc: "Prep & compact area for paving",            unit:"m²", qty:282, l:25,  t:0,  m:0,   p:0, mk:0.06 },
+    { desc: "Supply & install 60mm interlocking paving", unit:"m²", qty:282, l:100, t:20, m:183, p:0, mk:0.06 },
+    { desc: "Install border on concrete",                unit:"m",  qty:220, l:20,  t:0,  m:0,   p:0, mk:0.06 }
+  ]},
+  { name: "RED & YELLOW SECTION", extra:{ label:"Section labour allowance", kind:"Labour", amt:450, mk:0.06 }, items: [
+    { desc: "Prep & compact area for paving",            unit:"m²", qty:325, l:25,  t:0,  m:0,   p:0, mk:0.06 },
+    { desc: "Supply & install 50mm beveled paving",      unit:"m²", qty:325, l:100, t:20, m:157, p:0, mk:0.06 },
+    { desc: "Install border on concrete",                unit:"m",  qty:375, l:20,  t:0,  m:0,   p:0, mk:0.06 }
+  ]}
+];
+
+const KNOWN = {
+  "Prep & compact area for paving": 26.50,
+  "Supply & install 60mm interlocking paving": 321.18,
+  "Supply & install 50mm beveled paving": 293.62,
+  "Install border on concrete": 21.20
+};
+
+const r2 = n => Math.round(n * 100) / 100;
+const fR = n => "R " + r2(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+const dash = n => n > 0 ? fR(n) : "—";
+
+// ── TABS ──────────────────────────────────────────────────────────────────
+document.querySelectorAll(".ntab").forEach(t => {
+  t.addEventListener("click", () => {
+    const name = t.dataset.tab;
+    document.querySelectorAll(".ntab").forEach(x => x.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach(x => x.classList.remove("active"));
+    t.classList.add("active");
+    document.getElementById("tab-" + name).classList.add("active");
+    if (name === "allowables" && !document.getElementById("a-body").children.length) buildAllowables();
+    if (name === "daily" && !document.getElementById("da-body").children.length) buildDaily();
+  });
+});
+
+// ── ALLOWABLES ────────────────────────────────────────────────────────────
+function buildAllowables() {
+  const tbody = document.getElementById("a-body");
+  let totCost = 0, totQuote = 0, totProfit = 0;
+
+  SECTIONS.forEach(sec => {
+    // Section header
+    const hr = document.createElement("tr");
+    hr.className = "asr";
+    hr.innerHTML = `<td colspan="12" style="padding:10px 8px">${sec.name}</td>`;
+    tbody.appendChild(hr);
+
+    sec.items.forEach(item => {
+      const total = item.l + item.t + item.m + item.p;
+      const rate   = r2(total * (1 + item.mk));
+      const profit = r2(total * item.mk);
+      const known  = KNOWN[item.desc];
+      const match  = known != null ? Math.abs(rate - known) < 0.02 : true;
+      totCost   += total  * item.qty;
+      totQuote  += rate   * item.qty;
+      totProfit += profit * item.qty;
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${item.desc}</td>
+        <td>${item.unit}</td>
+        <td>${item.qty.toFixed(2)}</td>
+        <td>${dash(item.l)}</td>
+        <td>${dash(item.t)}</td>
+        <td>${dash(item.m)}</td>
+        <td>${dash(item.p)}</td>
+        <td style="font-weight:600">${fR(total)}</td>
+        <td>${(item.mk*100).toFixed(0)}%</td>
+        <td style="font-weight:600">${fR(rate)}</td>
+        <td style="color:#166534">${fR(profit)}</td>
+        <td><span class="chk ${match?'ok':'fail'}">${match?'✓':'✗'}</span></td>`;
+      tbody.appendChild(tr);
+    });
+
+    // Section-level extras (e.g. Cart parking material R920, Red&Yellow labour R450)
+    if (sec.extra) {
+      const e = sec.extra;
+      const eRate = r2(e.amt * (1 + e.mk));
+      totCost   += e.amt;
+      totProfit += r2(e.amt * e.mk);
+      totQuote  += eRate;
+      const er = document.createElement("tr");
+      er.className = "aex";
+      er.innerHTML = `
+        <td colspan="7" style="padding-left:20px">${e.label} (${e.kind}: ${fR(e.amt)})</td>
+        <td style="font-weight:600">${fR(e.amt)}</td>
+        <td>${(e.mk*100).toFixed(0)}%</td>
+        <td style="font-weight:600">${fR(eRate)}</td>
+        <td style="color:#166534">${fR(r2(e.amt*e.mk))}</td>
+        <td></td>`;
+      tbody.appendChild(er);
+    }
+  });
+
+  // Grand total row
+  const sr = document.createElement("tr");
+  sr.className = "asum";
+  sr.innerHTML = `
+    <td colspan="7" style="padding:12px 8px">TOTALS (excl. VAT)</td>
+    <td>${fR(totCost)}</td>
+    <td></td>
+    <td>${fR(totQuote)}</td>
+    <td style="color:#4ade80">${fR(totProfit)}</td>
+    <td></td>`;
+  tbody.appendChild(sr);
+
+  // Summary cards
+  const vat = 0.15;
+  const quoteInc = r2(totQuote * (1 + vat));
+  const margin   = r2((totProfit / totQuote) * 100);
+  document.getElementById("scards").innerHTML = `
+    <div class="sc"><div class="sc-label">TOTAL COST<br>(excl. VAT)</div><div class="sc-value b">${fR(totCost)}</div></div>
+    <div class="sc"><div class="sc-label">QUOTE<br>(excl. VAT)</div><div class="sc-value">${fR(totQuote)}</div></div>
+    <div class="sc"><div class="sc-label">QUOTE<br>(incl. 15% VAT)</div><div class="sc-value b">${fR(quoteInc)}</div></div>
+    <div class="sc"><div class="sc-label">GROSS PROFIT<br>(excl. VAT)</div><div class="sc-value g">${fR(totProfit)}</div></div>
+    <div class="sc"><div class="sc-label">PROFIT<br>MARGIN</div><div class="sc-value g">${margin.toFixed(1)}%</div></div>`;
+}
+
+// ── DAILY SHEET ───────────────────────────────────────────────────────────
+function buildDaily() {
+  const daBody = document.getElementById("da-body");
+  for (let i = 0; i < 6; i++) {
+    daBody.insertAdjacentHTML("beforeend", `<tr>
+      <td><input type="text" placeholder="e.g. Paving 60mm"/></td>
+      <td><input type="text" placeholder="Product"/></td>
+      <td><input type="number" class="da-la" min="0" step="0.01" oninput="calcDaily()" placeholder="0"/></td>
+      <td><input type="number" class="da-lt" min="0" step="0.01" oninput="calcDaily()" placeholder="0"/></td>
+      <td><input type="number" class="da-pa" min="0" step="0.01" oninput="calcDaily()" placeholder="0"/></td>
+      <td><input type="number" class="da-pt" min="0" step="0.01" oninput="calcDaily()" placeholder="0"/></td>
+    </tr>`);
+  }
+  const lcBody = document.getElementById("lc-body");
+  for (let i = 0; i < 6; i++) {
+    lcBody.insertAdjacentHTML("beforeend", `<tr>
+      <td><input type="text" placeholder="e.g. General worker"/></td>
+      <td><input type="number" class="lc-qty" min="0" step="1" oninput="calcDaily()" placeholder="0"/></td>
+      <td><input type="number" class="lc-hrs" min="0" step="0.5" oninput="calcDaily()" placeholder="0"/></td>
+      <td><input type="number" class="lc-rate" min="0" step="0.01" oninput="calcDaily()" placeholder="0.00"/></td>
+      <td class="lc-sub" style="font-weight:600"></td>
+    </tr>`);
+  }
+}
+
+function calcDaily() {
+  let labourAllow = 0, plantAllow = 0;
+  document.querySelectorAll(".da-la").forEach(el => labourAllow += parseFloat(el.value)||0);
+  document.querySelectorAll(".da-pa").forEach(el => plantAllow  += parseFloat(el.value)||0);
+
+  let labourCost = 0;
+  const qtys  = [...document.querySelectorAll(".lc-qty")];
+  const hrss  = [...document.querySelectorAll(".lc-hrs")];
+  const rates = [...document.querySelectorAll(".lc-rate")];
+  const subs  = [...document.querySelectorAll(".lc-sub")];
+  qtys.forEach((q, i) => {
+    const sub = (parseFloat(q.value)||0) * (parseFloat(hrss[i].value)||0) * (parseFloat(rates[i].value)||0);
+    subs[i].textContent = sub > 0 ? fR(sub) : "";
+    labourCost += sub;
+  });
+
+  const totalAllow = labourAllow + plantAllow;
+  const profit = Math.max(0, totalAllow - labourCost);
+  const loss   = Math.max(0, labourCost - totalAllow);
+
+  document.getElementById("da-la").textContent     = fR(labourAllow);
+  document.getElementById("da-pa").textContent     = fR(plantAllow);
+  document.getElementById("lc-total").textContent  = fR(labourCost);
+  document.getElementById("ds-la").textContent     = fR(labourAllow);
+  document.getElementById("ds-pa").textContent     = fR(plantAllow);
+  document.getElementById("ds-lc").textContent     = fR(labourCost);
+  document.getElementById("ds-profit").textContent = fR(profit);
+  document.getElementById("ds-loss").textContent   = fR(loss);
+}
+</script>
+</body>
+</html>
