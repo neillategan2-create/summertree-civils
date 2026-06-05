@@ -3,552 +3,971 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Summertree Civils — Quote &amp; Cost System</title>
+<title>Summertree Civils — Quote Management</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f4;color:#1a1a2e;min-height:100vh}
-
-/* TOP BAR */
-.topbar{background:#1a1a2e;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:14px 32px}
-.topbar h1{font-size:19px;font-weight:700;letter-spacing:1px}
-.topbar p{font-size:11px;color:#8892b0;margin-top:2px}
-.topbar-right{font-size:11px;color:#ccd6f6;text-align:right;line-height:1.9}
-
-/* TABS */
-nav{background:#0f172a;display:flex;padding:0 32px;border-bottom:1px solid #1e293b}
-.ntab{padding:13px 20px;font-size:13px;font-weight:500;color:#94a3b8;cursor:pointer;border-bottom:3px solid transparent;transition:.15s;user-select:none}
-.ntab:hover{color:#e2e8f0}
-.ntab.active{color:#38bdf8;border-bottom-color:#38bdf8}
-
-main{padding:28px 32px;max-width:1350px;margin:0 auto}
-.panel{display:none}.panel.active{display:block}
-.card{background:#fff;border-radius:10px;box-shadow:0 1px 14px rgba(0,0,0,.08);padding:40px}
-
-/* ── QUOTE ── */
-.qh{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:30px;padding-bottom:22px;border-bottom:3px solid #1a1a2e}
-.qlogo{display:flex;align-items:center;gap:14px}
-.logo-box{width:54px;height:54px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center}
-.logo-box svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.qcname{font-size:19px;font-weight:700}
-.qcreg{font-size:11px;color:#64748b;margin-top:2px}
-.qcontact{text-align:right;font-size:12px;color:#475569;line-height:2}
-.qcontact strong{color:#1e293b}
-
-.badge{display:inline-block;background:#1a1a2e;color:#fff;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 14px;border-radius:4px;margin-bottom:18px}
-.qmeta{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;font-size:13px;margin-bottom:26px}
-.qrow{display:flex;gap:8px;padding:3px 0}
-.ql{font-weight:600;color:#374151;min-width:90px}
-.qv{color:#4b5563}
-
-.qt{width:100%;border-collapse:collapse;font-size:13px}
-.qt thead tr{background:#1a1a2e;color:#fff}
-.qt th{padding:10px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.5px}
-.qt th:not(:first-child){text-align:right}
-.qt td{padding:8px 10px;border-bottom:1px solid #f1f5f9}
-.qt td:not(:first-child){text-align:right}
-.qt .sh td{background:#f1f5f9;font-weight:700;color:#1e293b;padding:10px;border-top:2px solid #cbd5e1}
-.qt .wh td{font-weight:700;color:#1a1a2e;padding:14px 10px 4px;border-bottom:none;font-size:14px}
-.qt .sub td{color:#64748b;font-style:italic;font-size:12px;padding:2px 10px 10px;border-bottom:none}
-.qt tr:hover:not(.sh):not(.wh):not(.sub){background:#f8fafc}
-
-.qtotals{margin-top:22px;display:flex;justify-content:flex-end}
-.qtinner{min-width:400px;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden}
-.trow{display:flex;justify-content:space-between;padding:10px 18px;font-size:13px;border-bottom:1px solid #e2e8f0}
-.trow:last-child{border-bottom:none}
-.trow.grand{background:#1a1a2e;color:#fff;font-weight:700;font-size:16px;padding:14px 18px}
-.trow .tl{color:#475569;font-weight:500}.trow.grand .tl{color:#94a3b8}
-.trow .tv{font-weight:600}
-
-.qfooter{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.terms{font-size:12px;color:#64748b;line-height:2.2;list-style:disc;padding-left:18px}
-.bank{background:#f8fafc;border-left:4px solid #1a1a2e;padding:16px;border-radius:0 6px 6px 0}
-.bank h4{font-size:12px;font-weight:700;color:#1a1a2e;margin-bottom:8px;letter-spacing:.5px}
-.bank p{font-size:12px;color:#475569;line-height:2}
-.sigrow{margin-top:38px;display:grid;grid-template-columns:1fr 1fr;gap:60px}
-.sigline{border-top:1px solid #94a3b8;padding-top:6px;font-size:11px;color:#94a3b8}
-
-/* ── ALLOWABLES ── */
-.allow-hd h2{font-size:19px;font-weight:700;margin-bottom:6px}
-.allow-hd p{font-size:13px;color:#64748b;margin-bottom:20px}
-.callout{padding:13px 18px;border-radius:8px;font-size:13px;border-left:4px solid #3b82f6;background:#eff6ff;color:#1e40af;margin-bottom:22px;line-height:1.6}
-.callout strong{font-weight:700}
-
-.at{width:100%;border-collapse:collapse;font-size:12px}
-.at th{background:#1e293b;color:#e2e8f0;padding:10px 7px;font-size:11px;font-weight:600;text-align:center;white-space:nowrap;border:1px solid #334155}
-.at th:first-child{text-align:left;min-width:190px}
-.at td{padding:8px 7px;border-bottom:1px solid #f1f5f9;text-align:center}
-.at td:first-child{text-align:left}
-.at .asr td{background:#f1f5f9;font-weight:700;color:#1e293b}
-.at .aex td{background:#fffbeb;color:#92400e;font-style:italic;font-size:11px}
-.at .asum td{background:#1a1a2e;color:#fff;font-weight:700;padding:12px 7px}
-.chk{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:12px;line-height:20px;text-align:center;font-weight:700}
-.ok{background:#dcfce7;color:#166534}.fail{background:#fee2e2;color:#991b1b}
-
-.scards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:22px}
-.sc{background:#1a1a2e;color:#fff;border-radius:8px;padding:16px;text-align:center}
-.sc-label{font-size:11px;color:#94a3b8;margin-bottom:8px;line-height:1.4}
-.sc-value{font-size:17px;font-weight:700}
-.sc-value.g{color:#4ade80}.sc-value.b{color:#38bdf8}
-
-/* ── DAILY SHEET ── */
-.ds{max-width:860px;margin:0 auto}
-.dsh{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:14px;border-bottom:3px solid #1a1a2e;margin-bottom:20px}
-.dstitle h2{font-size:18px;font-weight:700;color:#1a1a2e;text-align:right;line-height:1.25}
-.dsfields{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
-.dsf{display:flex;flex-direction:column;gap:4px}
-.dsf label{font-size:10px;font-weight:700;color:#374151;letter-spacing:.8px;text-transform:uppercase}
-.dsf input{border:none;border-bottom:1.5px solid #374151;padding:6px 2px;font-size:13px;outline:none;background:transparent;font-family:inherit}
-.dsf input:focus{border-bottom-color:#38bdf8}
-
-.dsbar{background:#1a1a2e;color:#fff;padding:8px 12px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-align:center;border-radius:4px 4px 0 0}
-.dsdiary{width:100%;min-height:76px;border:1px solid #cbd5e1;border-top:none;border-radius:0 0 4px 4px;padding:10px;font-size:13px;resize:vertical;outline:none;font-family:inherit;margin-bottom:20px}
-.dsdiary:focus{border-color:#38bdf8}
-
-.dstw{margin-bottom:20px}
-.dst{width:100%;border-collapse:collapse;font-size:12px}
-.dst th{background:#334155;color:#e2e8f0;padding:9px 6px;font-size:11px;font-weight:700;text-align:center;border:1px solid #475569}
-.dst th:first-child{text-align:left}
-.dst td{padding:6px 4px;border:1px solid #e2e8f0;text-align:center}
-.dst td:first-child{text-align:left}
-.dst td input{width:100%;border:none;text-align:center;font-size:12px;outline:none;padding:2px 4px;background:transparent;font-family:inherit}
-.dst td:first-child input{text-align:left}
-.dst .tr td{background:#f1f5f9;font-weight:700}
-.tlabel{text-align:right!important;padding-right:12px!important;font-size:11px}
-
-.dssummary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
-.dsi{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:7px;font-size:13px}
-.dsi-label{font-weight:600}.dsi-value{font-size:16px;font-weight:700}
-.c-la{background:#ecfdf5;color:#065f46}
-.c-pa{background:#f0fdf4;color:#14532d}
-.c-lc{background:#eff6ff;color:#1e40af}
-.c-pr{background:#f0fdf4;color:#14532d}
-.c-lo{background:#fff1f2;color:#881337}
-
-@media(max-width:900px){
-  main{padding:14px}
-  .card{padding:20px}
-  .scards{grid-template-columns:repeat(2,1fr)}
-  .qfooter,.dsfields{grid-template-columns:1fr}
+:root{
+  --navy:#1a1a2e;--navy2:#0f172a;--blue:#38bdf8;--green:#22c55e;
+  --yellow:#eab308;--red:#ef4444;--gray:#64748b;--light:#f1f5f9;
+  --white:#fff;--border:#e2e8f0;
 }
+body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f4;color:#1e293b;min-height:100vh}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit}
+input,textarea,select{font-family:inherit}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:12px 24px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.topbar-brand{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo{width:36px;height:36px;background:var(--blue);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:var(--navy);letter-spacing:-1px}
+.brand-name{font-size:16px;font-weight:700;letter-spacing:.5px}
+.brand-sub{font-size:10px;color:#94a3b8;margin-top:1px}
+.topbar-nav{display:flex;gap:4px}
+.tnav{padding:8px 14px;border-radius:6px;font-size:12px;font-weight:500;color:#94a3b8;cursor:pointer;transition:.15s}
+.tnav:hover,.tnav.active{background:rgba(255,255,255,.1);color:#fff}
+.topbar-right{font-size:11px;color:#64748b;text-align:right;line-height:1.7}
+
+/* ── LAYOUT ── */
+.view{display:none;padding:24px;max-width:1200px;margin:0 auto}
+.view.active{display:block}
+
+/* ── CARDS ── */
+.card{background:#fff;border-radius:10px;box-shadow:0 1px 12px rgba(0,0,0,.07);padding:28px;margin-bottom:20px}
+.card-sm{padding:18px}
+
+/* ── PAGE HEADERS ── */
+.ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
+.ph h2{font-size:20px;font-weight:700}
+.ph p{font-size:13px;color:var(--gray);margin-top:3px}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:7px;font-size:13px;font-weight:600;border:none;transition:.15s}
+.btn-primary{background:var(--navy);color:#fff}.btn-primary:hover{background:#0f172a}
+.btn-blue{background:var(--blue);color:var(--navy)}.btn-blue:hover{opacity:.9}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{opacity:.9}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{opacity:.9}
+.btn-yellow{background:var(--yellow);color:#fff}.btn-yellow:hover{opacity:.9}
+.btn-ghost{background:transparent;color:var(--gray);border:1.5px solid var(--border)}.btn-ghost:hover{border-color:var(--gray);color:#1e293b}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-xs{padding:4px 9px;font-size:11px}
+.btn-icon{padding:7px;border-radius:6px;background:var(--light);border:none;color:var(--gray)}.btn-icon:hover{background:var(--border);color:#1e293b}
+
+/* ── STATUS BADGES ── */
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+.s-draft{background:#f1f5f9;color:#475569}
+.s-sent{background:#eff6ff;color:#1d4ed8}
+.s-approved{background:#f0fdf4;color:#166534}
+.s-rejected{background:#fff1f2;color:#9f1239}
+.s-active{background:#fefce8;color:#92400e}
+.s-complete{background:#f0fdf4;color:#14532d}
+
+/* ── QUOTE LIST ── */
+.qlist{display:flex;flex-direction:column;gap:12px}
+.qitem{background:#fff;border-radius:10px;padding:18px 22px;display:flex;align-items:center;gap:16px;box-shadow:0 1px 8px rgba(0,0,0,.06);cursor:pointer;transition:.15s;border-left:4px solid transparent}
+.qitem:hover{box-shadow:0 4px 18px rgba(0,0,0,.11);transform:translateY(-1px)}
+.qitem.s-draft{border-left-color:#94a3b8}
+.qitem.s-sent{border-left-color:#3b82f6}
+.qitem.s-approved{border-left-color:#22c55e}
+.qitem.s-rejected{border-left-color:#ef4444}
+.qitem.s-active{border-left-color:#eab308}
+.qitem.s-complete{border-left-color:#10b981}
+.qi-num{font-size:13px;font-weight:700;color:var(--gray);min-width:60px}
+.qi-client{flex:1}.qi-client strong{font-size:14px;display:block}.qi-client span{font-size:12px;color:var(--gray)}
+.qi-amount{text-align:right;min-width:120px}.qi-amount strong{font-size:14px;display:block}.qi-amount span{font-size:11px;color:var(--gray)}
+.qi-date{font-size:12px;color:var(--gray);min-width:80px;text-align:right}
+
+/* ── FILTER BAR ── */
+.fbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.ftab{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);color:var(--gray);background:#fff;transition:.15s}
+.ftab.active,.ftab:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.fsearch{padding:8px 14px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;outline:none;min-width:200px;flex:1;max-width:300px}
+.fsearch:focus{border-color:var(--blue)}
+
+/* ── STATS ROW ── */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px}
+.stat{background:#fff;border-radius:10px;padding:16px;text-align:center;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.stat-n{font-size:24px;font-weight:700}.stat-l{font-size:11px;color:var(--gray);margin-top:3px}
+
+/* ── FORM LAYOUT ── */
+.fg{display:grid;gap:16px}
+.fg2{grid-template-columns:1fr 1fr}
+.fg3{grid-template-columns:1fr 1fr 1fr}
+.fg4{grid-template-columns:1fr 1fr 1fr 1fr}
+label{display:block;font-size:11px;font-weight:700;color:#374151;margin-bottom:5px;letter-spacing:.4px;text-transform:uppercase}
+.fi{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;outline:none;background:#fff;transition:.15s}
+.fi:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(56,189,248,.12)}
+textarea.fi{resize:vertical;min-height:70px}
+select.fi{cursor:pointer}
+
+/* ── SECTION BUILDER ── */
+.section-block{border:1.5px solid var(--border);border-radius:10px;margin-bottom:16px;overflow:hidden}
+.section-hd{background:var(--light);padding:12px 16px;display:flex;align-items:center;gap:10px}
+.section-hd input{flex:1;border:none;background:transparent;font-size:14px;font-weight:700;outline:none;color:var(--navy)}
+.section-body{padding:12px}
+.items-table{width:100%;border-collapse:collapse;font-size:12px}
+.items-table th{background:#1e293b;color:#e2e8f0;padding:7px 6px;text-align:center;font-size:10px;font-weight:700;letter-spacing:.4px}
+.items-table th:first-child{text-align:left}
+.items-table td{padding:4px 3px;border-bottom:1px solid var(--light)}
+.items-table td input{width:100%;border:1px solid transparent;border-radius:4px;padding:5px 4px;font-size:12px;outline:none;text-align:center;background:transparent}
+.items-table td:first-child input{text-align:left}
+.items-table td input:focus{border-color:var(--blue);background:#f0f9ff}
+.item-calc{background:var(--light);font-weight:600;text-align:right;padding:5px 8px;font-size:12px;color:#1e293b}
+.add-row-btn{margin-top:8px;font-size:11px;color:var(--blue);cursor:pointer;background:none;border:none;font-weight:600}
+.add-row-btn:hover{text-decoration:underline}
+
+/* ── QUOTE DETAIL ── */
+.detail-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:16px 22px;background:#fff;border-radius:10px;box-shadow:0 1px 10px rgba(0,0,0,.07);margin-bottom:20px}
+.detail-toolbar .spacer{flex:1}
+.quote-paper{background:#fff;border-radius:10px;box-shadow:0 1px 12px rgba(0,0,0,.07);padding:40px;max-width:900px;margin:0 auto}
+.qp-head{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:20px;border-bottom:3px solid var(--navy);margin-bottom:22px}
+.qp-logo-row{display:flex;align-items:center;gap:12px}
+.qp-logo{width:50px;height:50px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:var(--blue)}
+.qp-cname{font-size:17px;font-weight:700}
+.qp-creg{font-size:11px;color:var(--gray);margin-top:2px}
+.qp-contact{text-align:right;font-size:12px;color:#475569;line-height:2}
+.qp-badge{display:inline-block;background:var(--navy);color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:3px 12px;border-radius:4px;margin-bottom:14px}
+.qp-meta{display:grid;grid-template-columns:1fr 1fr;gap:3px 20px;font-size:13px;margin-bottom:22px}
+.qp-row{display:flex;gap:6px;padding:2px 0}
+.qp-l{font-weight:600;color:#374151;min-width:80px}
+.qp-v{color:#4b5563}
+.qt{width:100%;border-collapse:collapse;font-size:13px}
+.qt thead tr{background:var(--navy);color:#fff}
+.qt th{padding:10px;text-align:right;font-size:11px;font-weight:600;letter-spacing:.4px}
+.qt th:first-child{text-align:left}
+.qt td{padding:8px 10px;border-bottom:1px solid var(--light);text-align:right}
+.qt td:first-child{text-align:left}
+.qt .sec-hd td{background:var(--light);font-weight:700;color:var(--navy);padding:9px 10px;border-top:2px solid #cbd5e1}
+.qt tr:hover:not(.sec-hd){background:#fafcff}
+.qt-totals{margin-top:20px;display:flex;justify-content:flex-end}
+.qt-inner{min-width:360px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.trow{display:flex;justify-content:space-between;padding:9px 16px;font-size:13px;border-bottom:1px solid var(--border)}
+.trow:last-child{border-bottom:none}
+.trow.grand{background:var(--navy);color:#fff;font-weight:700;font-size:15px;padding:13px 16px}
+.trow .tl{color:#475569;font-weight:500}.trow.grand .tl{color:#94a3b8}
+.qp-footer{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.bank-box{background:var(--light);border-left:4px solid var(--navy);padding:14px;border-radius:0 6px 6px 0}
+.bank-box h4{font-size:11px;font-weight:700;color:var(--navy);margin-bottom:6px;letter-spacing:.4px}
+.bank-box p{font-size:12px;color:#475569;line-height:2}
+.terms-list{font-size:12px;color:var(--gray);line-height:2.3;list-style:disc;padding-left:18px}
+.sig-row{margin-top:34px;display:grid;grid-template-columns:1fr 1fr;gap:50px}
+.sig-line{border-top:1px solid #94a3b8;padding-top:5px;font-size:11px;color:#94a3b8}
+.status-watermark{text-align:center;margin:16px 0}
+.status-watermark span{display:inline-block;padding:6px 24px;border-radius:6px;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+
+/* ── ALLOWABLES VIEW ── */
+.allow-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.am-card{background:#fff;border-radius:10px;padding:16px;text-align:center;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.am-val{font-size:20px;font-weight:700;color:var(--navy)}.am-lbl{font-size:11px;color:var(--gray);margin-top:3px}
+.at{width:100%;border-collapse:collapse;font-size:12px}
+.at th{background:#1e293b;color:#e2e8f0;padding:9px 7px;font-size:11px;font-weight:600;text-align:center;border:1px solid #334155}
+.at th:first-child,.at td:first-child{text-align:left;min-width:180px}
+.at td{padding:7px 6px;border-bottom:1px solid var(--light);text-align:center}
+.at .as-hd td{background:var(--light);font-weight:700;color:var(--navy)}
+.at .as-tot td{background:var(--navy);color:#fff;font-weight:700;padding:11px 7px}
+.chk{display:inline-block;width:22px;height:22px;border-radius:50%;font-size:12px;line-height:22px;text-align:center;font-weight:700}
+.chk.ok{background:#dcfce7;color:#166534}.chk.fail{background:#fee2e2;color:#991b1b}
+
+/* ── DAILY SHEETS ── */
+.ds-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.ds-item{background:#fff;border-radius:8px;padding:14px 18px;display:flex;align-items:center;gap:16px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:.15s}
+.ds-item:hover{box-shadow:0 3px 14px rgba(0,0,0,.1)}
+.dsi-date{font-weight:700;min-width:90px;font-size:13px}
+.dsi-sup{flex:1;font-size:13px;color:var(--gray)}
+.dsi-profit{font-weight:700;font-size:14px}
+.dsi-profit.pos{color:#166534}.dsi-profit.neg{color:#991b1b}
+
+/* ── DAILY ENTRY FORM ── */
+.daily-form{max-width:800px;margin:0 auto}
+.dsbar{background:var(--navy);color:#fff;padding:8px 12px;font-size:11px;font-weight:700;letter-spacing:1.5px;border-radius:4px 4px 0 0;text-align:center}
+.dsdiary{width:100%;min-height:68px;border:1.5px solid var(--border);border-top:none;border-radius:0 0 6px 6px;padding:10px;font-size:13px;resize:vertical;outline:none;font-family:inherit;margin-bottom:18px}
+.dsdiary:focus{border-color:var(--blue)}
+.dst{width:100%;border-collapse:collapse;font-size:12px}
+.dst th{background:#334155;color:#e2e8f0;padding:8px 6px;font-size:11px;font-weight:700;text-align:center;border:1px solid #475569}
+.dst th:first-child{text-align:left}
+.dst td{padding:5px 3px;border:1px solid var(--border);text-align:center}
+.dst td:first-child{text-align:left}
+.dst td input{width:100%;border:none;text-align:center;font-size:12px;outline:none;padding:4px;background:transparent}
+.dst td:first-child input{text-align:left}
+.dst input:focus{background:#f0f9ff}
+.dst .tr-foot td{background:var(--light);font-weight:700;padding:8px 6px}
+.ds-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+.dss-card{border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:4px}
+.dss-label{font-size:11px;font-weight:600;color:inherit;opacity:.7}
+.dss-value{font-size:20px;font-weight:700}
+.dss-all{background:#ecfdf5;color:#065f46}
+.dss-cost{background:#eff6ff;color:#1e40af}
+.dss-profit{background:#f0fdf4;color:#14532d}
+.dss-loss{background:#fff1f2;color:#881337}
+.dss-net{background:#1a1a2e;color:#fff}
+
+/* ── MODALS ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:12px;padding:28px;max-width:460px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal h3{font-size:17px;font-weight:700;margin-bottom:10px}
+.modal p{font-size:13px;color:var(--gray);margin-bottom:20px;line-height:1.6}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:60px 20px;color:var(--gray)}
+.empty-icon{font-size:48px;margin-bottom:16px}
+.empty h3{font-size:16px;font-weight:600;margin-bottom:8px;color:#475569}
+.empty p{font-size:13px;line-height:1.6;max-width:360px;margin:0 auto 20px}
+
+/* ── PRINT ── */
 @media print{
-  nav,.topbar{display:none}
-  .panel{display:block!important;page-break-after:always}
-  .card{box-shadow:none;border:1px solid #ddd}
+  .topbar,.detail-toolbar,.modal-bg{display:none!important}
+  .quote-paper{box-shadow:none!important;padding:20px!important}
+  body{background:#fff}
+}
+@media(max-width:768px){
+  .stats,.allow-meta{grid-template-columns:repeat(2,1fr)}
+  .fg2,.fg3,.fg4{grid-template-columns:1fr}
+  .qp-footer,.sig-row{grid-template-columns:1fr}
+  .view{padding:14px}
+  .card{padding:18px}
+  .ds-summary{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
+<!-- TOP BAR -->
 <header class="topbar">
-  <div>
-    <h1>SUMMERTREE CIVILS</h1>
-    <p>Civil Engineering &amp; Paving — Quotation &amp; Cost Management</p>
+  <div class="topbar-brand" onclick="nav('dashboard')">
+    <div class="logo">SC</div>
+    <div><div class="brand-name">Summertree Civils</div><div class="brand-sub">Civil Engineering &amp; Paving</div></div>
   </div>
-  <div class="topbar-right">
-    CK 2016/304170/07 &bull; VAT No 471 027 4319<br>
-    P.O. Box 110, Jeffreys Bay &bull; Tel: 072 263 4470 &bull; waldo@summertree.org.za
-  </div>
+  <nav class="topbar-nav">
+    <div class="tnav active" data-nav="dashboard" onclick="nav('dashboard')">Dashboard</div>
+    <div class="tnav" data-nav="quotes" onclick="nav('quotes')">All Quotes</div>
+  </nav>
+  <div class="topbar-right">CK 2016/304170/07 &bull; VAT 471 027 4319<br>waldo@summertree.org.za</div>
 </header>
 
-<nav>
-  <div class="ntab active" data-tab="quote">&#x1F4C4; Quote</div>
-  <div class="ntab" data-tab="allowables">&#x1F4CA; Allowables</div>
-  <div class="ntab" data-tab="daily">&#x1F4CB; Daily Site Sheet</div>
-</nav>
+<!-- CONFIRM MODAL -->
+<div class="modal-bg" id="confirm-modal">
+  <div class="modal">
+    <h3 id="cm-title">Confirm</h3>
+    <p id="cm-body"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn" id="cm-ok">Confirm</button>
+    </div>
+  </div>
+</div>
 
-<main>
+<!-- ═══════════ VIEW: DASHBOARD ═══════════ -->
+<div class="view active" id="view-dashboard">
+  <div class="ph">
+    <div><h2>Dashboard</h2><p>Overview of all quotes and site activity</p></div>
+    <button class="btn btn-primary" onclick="nav('quote-edit','new')">+ New Quote</button>
+  </div>
+  <div class="stats" id="dash-stats"></div>
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px">Recent Quotes</div>
+    <div id="dash-recent"></div>
+  </div>
+</div>
 
-<!-- ═══════════════════ QUOTE ═══════════════════ -->
-<div id="tab-quote" class="panel active">
-<div class="card">
+<!-- ═══════════ VIEW: ALL QUOTES ═══════════ -->
+<div class="view" id="view-quotes">
+  <div class="ph">
+    <div><h2>All Quotes</h2><p>Manage and track all customer estimates</p></div>
+    <button class="btn btn-primary" onclick="nav('quote-edit','new')">+ New Quote</button>
+  </div>
+  <div class="fbar">
+    <div class="ftab active" data-filter="all" onclick="setFilter(this,'all')">All</div>
+    <div class="ftab" data-filter="draft" onclick="setFilter(this,'draft')">Draft</div>
+    <div class="ftab" data-filter="sent" onclick="setFilter(this,'sent')">Sent</div>
+    <div class="ftab" data-filter="approved" onclick="setFilter(this,'approved')">Approved</div>
+    <div class="ftab" data-filter="active" onclick="setFilter(this,'active')">Active</div>
+    <div class="ftab" data-filter="rejected" onclick="setFilter(this,'rejected')">Rejected</div>
+    <input class="fsearch" type="text" placeholder="Search client or site…" oninput="renderQuoteList()" id="q-search">
+  </div>
+  <div id="quote-list"></div>
+</div>
 
-  <div class="qh">
-    <div class="qlogo">
-      <div class="logo-box">
-        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+<!-- ═══════════ VIEW: QUOTE EDITOR ═══════════ -->
+<div class="view" id="view-quote-edit">
+  <div class="ph">
+    <div><h2 id="qe-title">New Quote</h2><p>Fill in client details and line items</p></div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-ghost" onclick="nav('quotes')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveQuote()">Save Quote</button>
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-size:13px;font-weight:700;color:var(--gray);letter-spacing:.5px;margin-bottom:14px">CLIENT &amp; PROJECT</div>
+    <div class="fg fg2" style="margin-bottom:14px">
+      <div><label>Client Name</label><input class="fi" id="qe-client" placeholder="e.g. Jbay Golf Club"/></div>
+      <div><label>Attention</label><input class="fi" id="qe-attention" placeholder="Contact person"/></div>
+    </div>
+    <div class="fg fg3">
+      <div><label>Site</label><input class="fi" id="qe-site" placeholder="Site address/name"/></div>
+      <div><label>Date</label><input class="fi" type="date" id="qe-date"/></div>
+      <div><label>Default Markup %</label><input class="fi" type="number" id="qe-markup" value="15" min="0" max="100" step="0.5"/></div>
+    </div>
+  </div>
+
+  <div id="sections-container"></div>
+
+  <div style="display:flex;gap:10px;margin-bottom:20px">
+    <button class="btn btn-ghost" onclick="addSection()">+ Add Section</button>
+    <button class="btn btn-ghost" onclick="addSection('Extra / Miscellaneous')">+ Add Misc Section</button>
+  </div>
+
+  <div class="card">
+    <div style="font-size:13px;font-weight:700;color:var(--gray);letter-spacing:.5px;margin-bottom:14px">TERMS &amp; CONDITIONS</div>
+    <textarea class="fi" id="qe-terms" rows="3" placeholder="e.g. 50% deposit required on acceptance. All materials remain property of Summertree Civils until paid in full.">50% deposit required on acceptance of the quotation. All materials used remain the property of Summertree Civils until account is paid in full.</textarea>
+  </div>
+</div>
+
+<!-- ═══════════ VIEW: QUOTE DETAIL ═══════════ -->
+<div class="view" id="view-quote-detail">
+  <div class="detail-toolbar" id="detail-toolbar"></div>
+  <div class="quote-paper" id="quote-paper"></div>
+</div>
+
+<!-- ═══════════ VIEW: ALLOWABLES ═══════════ -->
+<div class="view" id="view-allowables">
+  <div class="ph">
+    <div><h2 id="allow-title">Allowables</h2><p id="allow-sub">Internal cost tracking for this contract</p></div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-ghost" onclick="history.back()">← Back</button>
+      <button class="btn btn-primary" onclick="openDailyEntry()">+ New Daily Sheet</button>
+    </div>
+  </div>
+  <div class="allow-meta" id="allow-meta"></div>
+  <div class="card" style="margin-bottom:20px">
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px">Allowable Rates per Operation</div>
+    <table class="at" id="allow-table"></table>
+  </div>
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px">Daily Site Sheets</div>
+    <div id="ds-list-container"></div>
+  </div>
+</div>
+
+<!-- ═══════════ VIEW: DAILY ENTRY ═══════════ -->
+<div class="view" id="view-daily-entry">
+  <div class="ph">
+    <div><h2>Daily Site Sheet</h2><p id="de-sub">Record daily plant &amp; labour against allowables</p></div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-ghost" id="de-back-btn">← Back</button>
+      <button class="btn btn-primary" onclick="saveDailySheet()">Save Sheet</button>
+    </div>
+  </div>
+  <div class="daily-form">
+    <input type="hidden" id="de-quote-id"/>
+    <input type="hidden" id="de-sheet-id"/>
+    <div class="card card-sm" style="margin-bottom:16px">
+      <div class="fg fg3">
+        <div><label>Supervisor</label><input class="fi" id="de-supervisor" placeholder="Name"/></div>
+        <div><label>Contract #</label><input class="fi" id="de-contract" placeholder="e.g. 451"/></div>
+        <div><label>Date</label><input class="fi" type="date" id="de-date"/></div>
       </div>
-      <div>
-        <div class="qcname">Summertree Civils</div>
-        <div class="qcreg">CK 2016/304170/07 &bull; VAT No 471 027 4319</div>
-      </div>
     </div>
-    <div class="qcontact">
-      P.O. Box 110, Jeffreys Bay<br>
-      Tel: 072 263 4470<br>
-      waldo@summertree.org.za<br>
-      <strong>From: Waldo van Niekerk</strong>
+    <div class="dsbar">DIARY</div>
+    <textarea class="dsdiary" id="de-diary" placeholder="Notes for the day…"></textarea>
+    <div style="margin-bottom:14px">
+      <div class="dsbar">DAILY ALLOWABLES</div>
+      <table class="dst">
+        <thead><tr>
+          <th style="width:26%">OPERATION</th><th style="width:20%">PRODUCT</th>
+          <th>LABOUR ALLOW</th><th>LABOUR TOTAL</th>
+          <th>PLANT ALLOW</th><th>PLANT TOTAL</th>
+        </tr></thead>
+        <tbody id="de-allow-body"></tbody>
+        <tfoot>
+          <tr class="tr-foot">
+            <td colspan="2" style="text-align:right;padding-right:10px;font-size:11px">① TOTAL LABOUR ALLOWABLE</td>
+            <td colspan="2" id="de-la-tot" style="color:#065f46;font-size:13px;font-weight:700"></td>
+            <td colspan="2"></td>
+          </tr>
+          <tr class="tr-foot">
+            <td colspan="2" style="text-align:right;padding-right:10px;font-size:11px">② TOTAL PLANT ALLOWABLE</td>
+            <td colspan="2"></td>
+            <td colspan="2" id="de-pa-tot" style="color:#065f46;font-size:13px;font-weight:700"></td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
+    <div style="margin-bottom:14px">
+      <div class="dsbar">LABOUR COST</div>
+      <table class="dst">
+        <thead><tr>
+          <th style="width:36%">LABOUR</th><th>QTY</th><th>HRS</th><th>RATE (R)</th><th>SUB-TOTAL</th>
+        </tr></thead>
+        <tbody id="de-labour-body"></tbody>
+        <tfoot>
+          <tr class="tr-foot">
+            <td colspan="4" style="text-align:right;padding-right:10px;font-size:11px">③ TOTAL LABOUR COST</td>
+            <td id="de-lc-tot" style="color:#1e40af;font-size:13px;font-weight:700"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="ds-summary" id="de-summary"></div>
   </div>
-
-  <div class="badge">ESTIMATE</div>
-
-  <div class="qmeta">
-    <div>
-      <div class="qrow"><span class="ql">CLIENT:</span><span class="qv">Jbay Golf Club</span></div>
-      <div class="qrow"><span class="ql">SITE:</span><span class="qv">Jbay Golf Club</span></div>
-    </div>
-    <div>
-      <div class="qrow"><span class="ql">ATTENTION:</span><span class="qv">Okkie Esterhuizen</span></div>
-      <div class="qrow"><span class="ql">DATE:</span><span class="qv">2026/04/02</span></div>
-    </div>
-  </div>
-
-  <table class="qt">
-    <thead>
-      <tr>
-        <th style="width:46%">DESCRIPTION</th>
-        <th style="width:7%">UNIT</th>
-        <th style="width:10%">QUANTITY</th>
-        <th style="width:13%">RATE</th>
-        <th style="width:14%">AMOUNT</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="wh"><td colspan="5">WORK TO BE CARRIED OUT</td></tr>
-      <tr class="sub"><td colspan="5">Paving walkways</td></tr>
-
-      <tr class="sh"><td colspan="5">GREEN SECTION</td></tr>
-      <tr><td>Prep &amp; compact area for paving</td><td>m²</td><td>72.00</td><td>R 26.50</td><td>R 1,908.00</td></tr>
-      <tr><td>Supply &amp; install 60mm interlocking paving</td><td>m²</td><td>72.00</td><td>R 321.18</td><td>R 23,124.96</td></tr>
-      <tr><td>Install border on concrete</td><td>m</td><td>72.00</td><td>R 21.20</td><td>R 1,526.40</td></tr>
-
-      <tr class="sh"><td colspan="5">ORANJE SECTION</td></tr>
-      <tr><td>Prep &amp; compact area for paving</td><td>m²</td><td>152.00</td><td>R 26.50</td><td>R 4,028.00</td></tr>
-      <tr><td>Supply &amp; install 60mm interlocking paving</td><td>m²</td><td>152.00</td><td>R 321.18</td><td>R 48,819.36</td></tr>
-      <tr><td>Install border on concrete</td><td>m</td><td>304.00</td><td>R 21.20</td><td>R 6,444.80</td></tr>
-
-      <tr class="sh"><td colspan="5">CART PARKING SECTION</td></tr>
-      <tr><td>Prep &amp; compact area for paving</td><td>m²</td><td>282.00</td><td>R 26.50</td><td>R 7,473.00</td></tr>
-      <tr><td>Supply &amp; install 60mm interlocking paving</td><td>m²</td><td>282.00</td><td>R 321.18</td><td>R 90,572.76</td></tr>
-      <tr><td>Install border on concrete</td><td>m</td><td>220.00</td><td>R 21.20</td><td>R 4,664.00</td></tr>
-
-      <tr class="sh"><td colspan="5">RED &amp; YELLOW SECTION</td></tr>
-      <tr><td>Prep &amp; compact area for paving</td><td>m²</td><td>325.00</td><td>R 26.50</td><td>R 8,612.50</td></tr>
-      <tr><td>Supply &amp; install 50mm beveled paving</td><td>m²</td><td>325.00</td><td>R 293.62</td><td>R 95,426.50</td></tr>
-      <tr><td>Install border on concrete</td><td>m</td><td>375.00</td><td>R 21.20</td><td>R 7,950.00</td></tr>
-    </tbody>
-  </table>
-
-  <div class="qtotals">
-    <div class="qtinner">
-      <div class="trow"><span class="tl">Total Value of Work to Date</span><span class="tv">R 300,550.28</span></div>
-      <div class="trow"><span class="tl">Allow 10% Contingencies</span><span class="tv" style="color:#94a3b8">—</span></div>
-      <div class="trow"><span class="tl">Sub Total</span><span class="tv">R 300,550.28</span></div>
-      <div class="trow"><span class="tl">Add VAT 15%</span><span class="tv">R 45,082.54</span></div>
-      <div class="trow grand"><span class="tl">TOTAL OFFER AMOUNT</span><span class="tv">R 345,632.82</span></div>
-    </div>
-  </div>
-
-  <div class="qfooter">
-    <ul class="terms">
-      <li>50% deposit required on acceptance of the quotation</li>
-      <li>All materials used remain the property of Summertree Civils until account is paid in full</li>
-    </ul>
-    <div class="bank">
-      <h4>BANK DETAILS</h4>
-      <p>Summertree Civils<br>FNB — Jeffreys Bay<br>Branch: 210515<br>Acc: 62 853 125 104</p>
-    </div>
-  </div>
-
-  <div class="sigrow">
-    <div><div class="sigline">Accepted by client: ___________________________</div></div>
-    <div><div class="sigline">Date: ___________________________</div></div>
-  </div>
-
 </div>
-</div>
-
-<!-- ═══════════════════ ALLOWABLES ═══════════════════ -->
-<div id="tab-allowables" class="panel">
-<div class="card">
-  <div class="allow-hd">
-    <h2>Company Allowables — Internal Cost Breakdown</h2>
-    <p>Per-unit cost build-up for each operation. <strong>Rule: Allowable Total &times; (1 + Markup%) = Customer Rate.</strong> Validation column confirms every line item.</p>
-  </div>
-  <div class="callout">
-    <strong>Validation:</strong> The customer's rate per m² (or m) is derived by marking up the internal allowable total. These two figures must be identical — if they drift, the quote either underprices the work (loss) or prices itself out of the contract. Green ✓ = confirmed match.
-  </div>
-  <table class="at">
-    <thead>
-      <tr>
-        <th>DESCRIPTION</th><th>UNIT</th><th>QTY</th>
-        <th>LABOUR<br>/unit</th><th>TRANSPORT<br>P&amp;G /unit</th><th>MATERIAL<br>/unit</th><th>PLANT<br>/unit</th>
-        <th>ALLOWABLE<br>TOTAL /unit</th><th>MARKUP</th><th>CUSTOMER<br>RATE /unit</th>
-        <th>PROFIT<br>/unit</th><th>VALID?</th>
-      </tr>
-    </thead>
-    <tbody id="a-body"></tbody>
-  </table>
-  <div class="scards" id="scards"></div>
-</div>
-</div>
-
-<!-- ═══════════════════ DAILY SHEET ═══════════════════ -->
-<div id="tab-daily" class="panel">
-<div class="card ds">
-
-  <div class="dsh">
-    <div class="qlogo">
-      <div class="logo-box">
-        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      </div>
-      <div><div class="qcname">Summertree Civils</div></div>
-    </div>
-    <div class="dstitle"><h2>DAILY PLANT<br>&amp; LABOUR COST</h2></div>
-  </div>
-
-  <div class="dsfields">
-    <div class="dsf"><label>Supervisor</label><input type="text" placeholder="Name"/></div>
-    <div class="dsf"><label>Contract #</label><input type="text" value="451"/></div>
-    <div class="dsf"><label>Date</label><input type="date"/></div>
-  </div>
-
-  <div class="dsbar">DIARY</div>
-  <textarea class="dsdiary" placeholder="Daily notes and observations…"></textarea>
-
-  <div class="dstw">
-    <div class="dsbar">DAILY ALLOWABLES</div>
-    <table class="dst">
-      <thead>
-        <tr>
-          <th style="width:28%">OPERATION</th><th style="width:20%">PRODUCT</th>
-          <th>LABOUR<br>ALLOW</th><th>LABOUR<br>TOTAL</th>
-          <th>PLANT<br>ALLOW</th><th>PLANT<br>TOTAL</th>
-        </tr>
-      </thead>
-      <tbody id="da-body"></tbody>
-      <tfoot>
-        <tr class="tr">
-          <td colspan="2" class="tlabel">&#9312; TOTAL (Labour Allow)</td>
-          <td colspan="2" id="da-la" style="color:#065f46;font-size:14px"></td>
-          <td colspan="2"></td>
-        </tr>
-        <tr class="tr">
-          <td colspan="2" class="tlabel">&#9313; TOTAL (Plant Allow)</td>
-          <td colspan="2"></td>
-          <td colspan="2" id="da-pa" style="color:#065f46;font-size:14px"></td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-
-  <div class="dstw">
-    <div class="dsbar">LABOUR COST</div>
-    <table class="dst">
-      <thead>
-        <tr>
-          <th style="width:36%">LABOUR</th><th>QTY</th><th>HRS</th><th>RATE</th><th>SUB-TOTAL</th>
-        </tr>
-      </thead>
-      <tbody id="lc-body"></tbody>
-      <tfoot>
-        <tr class="tr">
-          <td colspan="4" class="tlabel">&#9314; TOTAL LABOUR COST</td>
-          <td id="lc-total" style="color:#1e40af;font-size:14px"></td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-
-  <div class="dssummary">
-    <div class="dsi c-la"><span class="dsi-label">&#9312; Daily Labour Allowable</span><span class="dsi-value" id="ds-la">R 0.00</span></div>
-    <div class="dsi c-pa"><span class="dsi-label">&#9313; Daily Plant Allowable</span><span class="dsi-value" id="ds-pa">R 0.00</span></div>
-    <div class="dsi c-lc"><span class="dsi-label">&#9314; Daily Labour Cost</span><span class="dsi-value" id="ds-lc">R 0.00</span></div>
-    <div class="dsi c-pr"><span class="dsi-label">PROFIT</span><span class="dsi-value" id="ds-profit">R 0.00</span></div>
-    <div class="dsi c-lo"><span class="dsi-label">LOSS</span><span class="dsi-value" id="ds-loss">R 0.00</span></div>
-  </div>
-
-</div>
-</div>
-
-</main>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────────────────
-const SECTIONS = [
-  { name: "GREEN SECTION", items: [
-    { desc: "Prep & compact area for paving",            unit:"m²", qty:72,  l:25,  t:0,  m:0,   p:0, mk:0.06 },
-    { desc: "Supply & install 60mm interlocking paving", unit:"m²", qty:72,  l:100, t:20, m:183, p:0, mk:0.06 },
-    { desc: "Install border on concrete",                unit:"m",  qty:72,  l:20,  t:0,  m:0,   p:0, mk:0.06 }
-  ]},
-  { name: "ORANJE SECTION", items: [
-    { desc: "Prep & compact area for paving",            unit:"m²", qty:152, l:25,  t:0,  m:0,   p:0, mk:0.06 },
-    { desc: "Supply & install 60mm interlocking paving", unit:"m²", qty:152, l:100, t:20, m:183, p:0, mk:0.06 },
-    { desc: "Install border on concrete",                unit:"m",  qty:304, l:20,  t:0,  m:0,   p:0, mk:0.06 }
-  ]},
-  { name: "CART PARKING SECTION", extra:{ label:"Section material allowance", kind:"Material", amt:920, mk:0.06 }, items: [
-    { desc: "Prep & compact area for paving",            unit:"m²", qty:282, l:25,  t:0,  m:0,   p:0, mk:0.06 },
-    { desc: "Supply & install 60mm interlocking paving", unit:"m²", qty:282, l:100, t:20, m:183, p:0, mk:0.06 },
-    { desc: "Install border on concrete",                unit:"m",  qty:220, l:20,  t:0,  m:0,   p:0, mk:0.06 }
-  ]},
-  { name: "RED & YELLOW SECTION", extra:{ label:"Section labour allowance", kind:"Labour", amt:450, mk:0.06 }, items: [
-    { desc: "Prep & compact area for paving",            unit:"m²", qty:325, l:25,  t:0,  m:0,   p:0, mk:0.06 },
-    { desc: "Supply & install 50mm beveled paving",      unit:"m²", qty:325, l:100, t:20, m:157, p:0, mk:0.06 },
-    { desc: "Install border on concrete",                unit:"m",  qty:375, l:20,  t:0,  m:0,   p:0, mk:0.06 }
-  ]}
-];
+// ═══════════════════════════════════════════════════════
+// DATA LAYER
+// ═══════════════════════════════════════════════════════
+function load(){return JSON.parse(localStorage.getItem('sc_quotes')||'[]')}
+function save(q){localStorage.setItem('sc_quotes',JSON.stringify(q))}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function nextNum(){
+  const q=load(); if(!q.length) return 'Q-001';
+  const nums=q.map(x=>parseInt((x.number||'Q-000').split('-')[1]||0));
+  return 'Q-'+(Math.max(...nums)+1).toString().padStart(3,'0');
+}
+const fR=n=>'R '+parseFloat(n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+const r2=n=>Math.round((n||0)*100)/100;
 
-const KNOWN = {
-  "Prep & compact area for paving": 26.50,
-  "Supply & install 60mm interlocking paving": 321.18,
-  "Supply & install 50mm beveled paving": 293.62,
-  "Install border on concrete": 21.20
-};
+// ═══════════════════════════════════════════════════════
+// ROUTING
+// ═══════════════════════════════════════════════════════
+let _currentFilter='all';
+function nav(view,arg){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tnav').forEach(t=>t.classList.remove('active'));
+  const el=document.getElementById('view-'+view);
+  if(el) el.classList.add('active');
+  const tn=document.querySelector(`[data-nav="${view}"]`);
+  if(tn) tn.classList.add('active');
+  if(view==='dashboard') renderDashboard();
+  if(view==='quotes') renderQuoteList();
+  if(view==='quote-edit') renderQuoteEdit(arg);
+  if(view==='quote-detail') renderQuoteDetail(arg);
+  if(view==='allowables') renderAllowables(arg);
+  window.scrollTo(0,0);
+}
 
-const r2 = n => Math.round(n * 100) / 100;
-const fR = n => "R " + r2(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-const dash = n => n > 0 ? fR(n) : "—";
+// ═══════════════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════════════
+function renderDashboard(){
+  const quotes=load();
+  const counts={draft:0,sent:0,approved:0,active:0,rejected:0};
+  quotes.forEach(q=>{ if(counts[q.status]!==undefined) counts[q.status]++; });
+  document.getElementById('dash-stats').innerHTML=`
+    <div class="stat"><div class="stat-n">${quotes.length}</div><div class="stat-l">Total Quotes</div></div>
+    <div class="stat"><div class="stat-n" style="color:#94a3b8">${counts.draft}</div><div class="stat-l">Draft</div></div>
+    <div class="stat"><div class="stat-n" style="color:#3b82f6">${counts.sent}</div><div class="stat-l">Sent</div></div>
+    <div class="stat"><div class="stat-n" style="color:#22c55e">${counts.approved}</div><div class="stat-l">Approved</div></div>
+    <div class="stat"><div class="stat-n" style="color:#eab308">${counts.active}</div><div class="stat-l">Active on Site</div></div>`;
+  const recent=quotes.slice(-5).reverse();
+  document.getElementById('dash-recent').innerHTML=recent.length?
+    recent.map(q=>quoteItemHTML(q)).join('')
+    :`<div class="empty"><div class="empty-icon">📋</div><h3>No quotes yet</h3><p>Create your first quote to get started.</p><button class="btn btn-primary" onclick="nav('quote-edit','new')">+ New Quote</button></div>`;
+}
 
-// ── TABS ──────────────────────────────────────────────────────────────────
-document.querySelectorAll(".ntab").forEach(t => {
-  t.addEventListener("click", () => {
-    const name = t.dataset.tab;
-    document.querySelectorAll(".ntab").forEach(x => x.classList.remove("active"));
-    document.querySelectorAll(".panel").forEach(x => x.classList.remove("active"));
-    t.classList.add("active");
-    document.getElementById("tab-" + name).classList.add("active");
-    if (name === "allowables" && !document.getElementById("a-body").children.length) buildAllowables();
-    if (name === "daily" && !document.getElementById("da-body").children.length) buildDaily();
+// ═══════════════════════════════════════════════════════
+// QUOTE LIST
+// ═══════════════════════════════════════════════════════
+function quoteItemHTML(q){
+  const total=calcTotal(q);
+  return `<div class="qitem s-${q.status}" onclick="nav('quote-detail','${q.id}')">
+    <div class="qi-num">${q.number||''}</div>
+    <div class="qi-client"><strong>${q.client||'Unnamed'}</strong><span>${q.site||''}</span></div>
+    <div><span class="badge s-${q.status}">${q.status}</span></div>
+    <div class="qi-amount"><strong>${fR(total.grand)}</strong><span>incl. VAT</span></div>
+    <div class="qi-date">${q.date||''}</div>
+  </div>`;
+}
+function calcTotal(q){
+  let sub=0;
+  (q.sections||[]).forEach(sec=>{
+    (sec.items||[]).forEach(it=>{
+      const cost=(+it.labour||0)+(+it.transport||0)+(+it.material||0)+(+it.plant||0);
+      const rate=r2(cost*(1+(+q.markup||15)/100));
+      sub+=rate*(+it.qty||0);
+    });
   });
-});
+  const vat=r2(sub*0.15);
+  return {sub:r2(sub),vat,grand:r2(sub+vat)};
+}
+function setFilter(el,f){
+  _currentFilter=f;
+  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderQuoteList();
+}
+function renderQuoteList(){
+  let quotes=load();
+  const search=(document.getElementById('q-search')?.value||'').toLowerCase();
+  if(_currentFilter!=='all') quotes=quotes.filter(q=>q.status===_currentFilter);
+  if(search) quotes=quotes.filter(q=>(q.client||'').toLowerCase().includes(search)||(q.site||'').toLowerCase().includes(search));
+  quotes=quotes.slice().reverse();
+  document.getElementById('quote-list').innerHTML=quotes.length?
+    `<div class="qlist">${quotes.map(q=>quoteItemHTML(q)).join('')}</div>`
+    :`<div class="empty"><div class="empty-icon">🔍</div><h3>No quotes found</h3><p>Try a different filter or search term.</p></div>`;
+}
 
-// ── ALLOWABLES ────────────────────────────────────────────────────────────
-function buildAllowables() {
-  const tbody = document.getElementById("a-body");
-  let totCost = 0, totQuote = 0, totProfit = 0;
+// ═══════════════════════════════════════════════════════
+// QUOTE EDITOR
+// ═══════════════════════════════════════════════════════
+let _editId=null;
+function renderQuoteEdit(id){
+  _editId=(id==='new')?null:id;
+  document.getElementById('qe-title').textContent=_editId?'Edit Quote':'New Quote';
+  let q={sections:[],markup:15,date:new Date().toISOString().slice(0,10)};
+  if(_editId){
+    const found=load().find(x=>x.id===_editId);
+    if(found) q=found;
+  }
+  document.getElementById('qe-client').value=q.client||'';
+  document.getElementById('qe-attention').value=q.attention||'';
+  document.getElementById('qe-site').value=q.site||'';
+  document.getElementById('qe-date').value=q.date||'';
+  document.getElementById('qe-markup').value=q.markup||15;
+  document.getElementById('qe-terms').value=q.terms||'50% deposit required on acceptance of the quotation. All materials used remain the property of Summertree Civils until account is paid in full.';
+  const sc=document.getElementById('sections-container');
+  sc.innerHTML='';
+  if(!q.sections||!q.sections.length){
+    addSection('Green Section');
+  } else {
+    q.sections.forEach(s=>addSection(s.name,s.items));
+  }
+}
+function addSection(name,items){
+  const sid=uid();
+  const sc=document.getElementById('sections-container');
+  const div=document.createElement('div');
+  div.className='card'; div.id='sec-'+sid;
+  div.innerHTML=`
+    <div class="section-hd">
+      <input type="text" value="${name||'New Section'}" placeholder="Section name" style="font-size:14px;font-weight:700;border:none;background:transparent;outline:none;flex:1;color:var(--navy)"/>
+      <button class="btn btn-xs btn-ghost" onclick="document.getElementById('sec-${sid}').remove()">Remove</button>
+    </div>
+    <div style="overflow-x:auto">
+    <table class="items-table" style="width:100%;min-width:750px">
+      <thead><tr>
+        <th style="width:28%;text-align:left">DESCRIPTION</th>
+        <th style="width:6%">UNIT</th><th style="width:7%">QTY</th>
+        <th>LABOUR/unit</th><th>TRANSPORT/unit</th><th>MATERIAL/unit</th><th>PLANT/unit</th>
+        <th>RATE/unit</th><th style="width:5%"></th>
+      </tr></thead>
+      <tbody id="items-${sid}"></tbody>
+    </table>
+    </div>
+    <button class="add-row-btn" onclick="addItem('${sid}')">+ Add line item</button>`;
+  sc.appendChild(div);
+  if(items&&items.length){ items.forEach(it=>addItem(sid,it)); }
+  else { addItem(sid); addItem(sid); }
+}
+function addItem(sid,it){
+  it=it||{};
+  const tbody=document.getElementById('items-'+sid);
+  const tr=document.createElement('tr');
+  tr.innerHTML=`
+    <td><input type="text" value="${it.desc||''}" placeholder="Description"/></td>
+    <td><input type="text" value="${it.unit||'m²'}" style="width:50px"/></td>
+    <td><input type="number" class="qty" value="${it.qty||''}" min="0" step="0.01" oninput="recalcRow(this)"/></td>
+    <td><input type="number" class="cost-l" value="${it.labour||''}" min="0" step="0.01" oninput="recalcRow(this)" placeholder="0"/></td>
+    <td><input type="number" class="cost-t" value="${it.transport||''}" min="0" step="0.01" oninput="recalcRow(this)" placeholder="0"/></td>
+    <td><input type="number" class="cost-m" value="${it.material||''}" min="0" step="0.01" oninput="recalcRow(this)" placeholder="0"/></td>
+    <td><input type="number" class="cost-p" value="${it.plant||''}" min="0" step="0.01" oninput="recalcRow(this)" placeholder="0"/></td>
+    <td class="item-calc" id="rc-${sid}-${Math.random().toString(36).slice(2,7)}">—</td>
+    <td><button class="btn-icon" onclick="this.closest('tr').remove()" title="Remove">✕</button></td>`;
+  tbody.appendChild(tr);
+  recalcRow(tr.querySelector('.qty'));
+}
+function recalcRow(inp){
+  const tr=inp.closest('tr');
+  const markup=parseFloat(document.getElementById('qe-markup').value)||15;
+  const qty=parseFloat(tr.querySelector('.qty').value)||0;
+  const l=parseFloat(tr.querySelector('.cost-l').value)||0;
+  const t=parseFloat(tr.querySelector('.cost-t').value)||0;
+  const m=parseFloat(tr.querySelector('.cost-m').value)||0;
+  const p=parseFloat(tr.querySelector('.cost-p').value)||0;
+  const total=l+t+m+p;
+  const rate=r2(total*(1+markup/100));
+  const amount=r2(rate*qty);
+  const cell=tr.querySelector('[id^="rc-"]');
+  if(cell) cell.textContent=amount>0?fR(amount):'—';
+}
+function saveQuote(){
+  const quotes=load();
+  const sec=[...document.querySelectorAll('#sections-container .card')].map(div=>{
+    const name=div.querySelector('input[type=text]')?.value||'Section';
+    const items=[...div.querySelectorAll('tbody tr')].map(tr=>({
+      desc:tr.cells[0]?.querySelector('input')?.value||'',
+      unit:tr.cells[1]?.querySelector('input')?.value||'m²',
+      qty:parseFloat(tr.cells[2]?.querySelector('input')?.value)||0,
+      labour:parseFloat(tr.cells[3]?.querySelector('input')?.value)||0,
+      transport:parseFloat(tr.cells[4]?.querySelector('input')?.value)||0,
+      material:parseFloat(tr.cells[5]?.querySelector('input')?.value)||0,
+      plant:parseFloat(tr.cells[6]?.querySelector('input')?.value)||0,
+    })).filter(it=>it.desc);
+    return {name,items};
+  });
+  const q={
+    id:_editId||uid(),
+    number:_editId?(quotes.find(x=>x.id===_editId)||{}).number||nextNum():nextNum(),
+    client:document.getElementById('qe-client').value,
+    attention:document.getElementById('qe-attention').value,
+    site:document.getElementById('qe-site').value,
+    date:document.getElementById('qe-date').value,
+    markup:parseFloat(document.getElementById('qe-markup').value)||15,
+    terms:document.getElementById('qe-terms').value,
+    status:_editId?(quotes.find(x=>x.id===_editId)||{}).status||'draft':'draft',
+    sections:sec,
+    dailySheets:_editId?(quotes.find(x=>x.id===_editId)||{}).dailySheets||[]:[]
+  };
+  if(_editId){ const i=quotes.findIndex(x=>x.id===_editId); if(i>-1) quotes[i]=q; else quotes.push(q); }
+  else quotes.push(q);
+  save(quotes);
+  nav('quote-detail',q.id);
+}
 
-  SECTIONS.forEach(sec => {
-    // Section header
-    const hr = document.createElement("tr");
-    hr.className = "asr";
-    hr.innerHTML = `<td colspan="12" style="padding:10px 8px">${sec.name}</td>`;
-    tbody.appendChild(hr);
+// ═══════════════════════════════════════════════════════
+// QUOTE DETAIL
+// ═══════════════════════════════════════════════════════
+function renderQuoteDetail(id){
+  const quotes=load(); const q=quotes.find(x=>x.id===id);
+  if(!q){ nav('quotes'); return; }
+  const t=calcTotal(q);
+  // toolbar
+  const tb=document.getElementById('detail-toolbar');
+  let actions='';
+  if(q.status==='draft'){
+    actions+=`<button class="btn btn-ghost" onclick="nav('quote-edit','${q.id}')">✏️ Edit</button>`;
+    actions+=`<button class="btn btn-blue" onclick="markStatus('${q.id}','sent')">📤 Mark as Sent</button>`;
+  }
+  if(q.status==='sent'){
+    actions+=`<button class="btn btn-ghost" onclick="nav('quote-edit','${q.id}')">✏️ Edit</button>`;
+    actions+=`<button class="btn btn-green" onclick="confirmAction('Approve this quote?','This will unlock the Allowables tracker for site use.','Approve',()=>markStatus(\'${q.id}\',\'approved\'))">✅ Approve</button>`;
+    actions+=`<button class="btn btn-red" onclick="confirmAction('Reject this quote?','The quote will be marked as rejected.','Reject',()=>markStatus(\'${q.id}\',\'rejected\'))">✖ Reject</button>`;
+  }
+  if(q.status==='approved'||q.status==='active'){
+    actions+=`<button class="btn btn-yellow" onclick="nav('allowables','${q.id}')">📊 Allowables &amp; Site</button>`;
+  }
+  tb.innerHTML=`
+    <button class="btn btn-ghost btn-sm" onclick="nav('quotes')">← Back</button>
+    <span class="badge s-${q.status}" style="font-size:13px;padding:6px 14px">${q.status.toUpperCase()}</span>
+    <strong style="font-size:14px">${q.number} — ${q.client}</strong>
+    <span class="spacer"></span>
+    ${actions}
+    <button class="btn btn-ghost btn-sm" onclick="window.print()">🖨 Print</button>
+    <button class="btn btn-red btn-sm" onclick="confirmAction('Delete this quote?','This cannot be undone.','Delete',()=>deleteQuote('${q.id}'))">🗑 Delete</button>`;
 
-    sec.items.forEach(item => {
-      const total = item.l + item.t + item.m + item.p;
-      const rate   = r2(total * (1 + item.mk));
-      const profit = r2(total * item.mk);
-      const known  = KNOWN[item.desc];
-      const match  = known != null ? Math.abs(rate - known) < 0.02 : true;
-      totCost   += total  * item.qty;
-      totQuote  += rate   * item.qty;
-      totProfit += profit * item.qty;
+  // paper
+  let rows='';
+  (q.sections||[]).forEach(sec=>{
+    rows+=`<tr class="sec-hd"><td colspan="5">${sec.name}</td></tr>`;
+    (sec.items||[]).forEach(it=>{
+      const cost=(+it.labour||0)+(+it.transport||0)+(+it.material||0)+(+it.plant||0);
+      const rate=r2(cost*(1+(+q.markup||15)/100));
+      const amt=r2(rate*(+it.qty||0));
+      rows+=`<tr><td>${it.desc}</td><td>${it.unit}</td><td>${(+it.qty||0).toFixed(2)}</td><td>${fR(rate)}</td><td>${fR(amt)}</td></tr>`;
+    });
+  });
+  let watermark='';
+  if(q.status==='approved') watermark=`<div class="status-watermark"><span style="background:#dcfce7;color:#166534;font-size:16px;letter-spacing:3px">✅ APPROVED</span></div>`;
+  if(q.status==='rejected') watermark=`<div class="status-watermark"><span style="background:#fee2e2;color:#991b1b;font-size:16px;letter-spacing:3px">✖ REJECTED</span></div>`;
+  document.getElementById('quote-paper').innerHTML=`
+    <div class="qp-head">
+      <div class="qp-logo-row">
+        <div class="qp-logo">SC</div>
+        <div><div class="qp-cname">Summertree Civils</div><div class="qp-creg">CK 2016/304170/07 &bull; VAT No 471 027 4319</div></div>
+      </div>
+      <div class="qp-contact">P.O. Box 110, Jeffreys Bay<br>Tel: 072 263 4470<br>waldo@summertree.org.za<br><strong>From: Waldo van Niekerk</strong></div>
+    </div>
+    ${watermark}
+    <div class="qp-badge">ESTIMATE — ${q.number}</div>
+    <div class="qp-meta">
+      <div>
+        <div class="qp-row"><span class="qp-l">CLIENT:</span><span class="qp-v">${q.client||''}</span></div>
+        <div class="qp-row"><span class="qp-l">SITE:</span><span class="qp-v">${q.site||''}</span></div>
+      </div>
+      <div>
+        <div class="qp-row"><span class="qp-l">ATTENTION:</span><span class="qp-v">${q.attention||''}</span></div>
+        <div class="qp-row"><span class="qp-l">DATE:</span><span class="qp-v">${q.date||''}</span></div>
+      </div>
+    </div>
+    <table class="qt">
+      <thead><tr>
+        <th style="width:46%;text-align:left">DESCRIPTION</th>
+        <th style="width:7%">UNIT</th><th style="width:10%">QUANTITY</th>
+        <th style="width:14%">RATE</th><th style="width:14%">AMOUNT</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="qt-totals">
+      <div class="qt-inner">
+        <div class="trow"><span class="tl">Total Value of Work</span><span>${fR(t.sub)}</span></div>
+        <div class="trow"><span class="tl">Add VAT 15%</span><span>${fR(t.vat)}</span></div>
+        <div class="trow grand"><span class="tl">TOTAL OFFER AMOUNT</span><span>${fR(t.grand)}</span></div>
+      </div>
+    </div>
+    <div class="qp-footer">
+      <ul class="terms-list">${(q.terms||'').split('\n').filter(Boolean).map(l=>`<li>${l}</li>`).join('')}</ul>
+      <div class="bank-box">
+        <h4>BANK DETAILS</h4>
+        <p>Summertree Civils<br>FNB — Jeffreys Bay<br>Branch: 210515<br>Acc: 62 853 125 104</p>
+      </div>
+    </div>
+    <div class="sig-row">
+      <div><div class="sig-line">Accepted by client: ___________________________</div></div>
+      <div><div class="sig-line">Date: ___________________________</div></div>
+    </div>`;
+}
+function markStatus(id,status){
+  const quotes=load(); const i=quotes.findIndex(x=>x.id===id);
+  if(i>-1){ quotes[i].status=status; save(quotes); }
+  closeModal();
+  if(status==='approved') nav('allowables',id);
+  else renderQuoteDetail(id);
+}
+function deleteQuote(id){
+  const quotes=load().filter(x=>x.id!==id); save(quotes);
+  closeModal(); nav('quotes');
+}
 
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${item.desc}</td>
-        <td>${item.unit}</td>
-        <td>${item.qty.toFixed(2)}</td>
-        <td>${dash(item.l)}</td>
-        <td>${dash(item.t)}</td>
-        <td>${dash(item.m)}</td>
-        <td>${dash(item.p)}</td>
-        <td style="font-weight:600">${fR(total)}</td>
-        <td>${(item.mk*100).toFixed(0)}%</td>
+// ═══════════════════════════════════════════════════════
+// ALLOWABLES
+// ═══════════════════════════════════════════════════════
+function renderAllowables(id){
+  const quotes=load(); const q=quotes.find(x=>x.id===id);
+  if(!q) return;
+  document.getElementById('allow-title').textContent=`Allowables — ${q.number}: ${q.client}`;
+  document.getElementById('allow-sub').textContent=`Site: ${q.site||''} | Markup: ${q.markup}%`;
+  const t=calcTotal(q);
+  // meta cards
+  const sheets=q.dailySheets||[];
+  const totalProfit=sheets.reduce((a,s)=>a+(+s.profitLoss||0),0);
+  document.getElementById('allow-meta').innerHTML=`
+    <div class="am-card"><div class="am-val">${fR(t.sub)}</div><div class="am-lbl">Quote Value (ex-VAT)</div></div>
+    <div class="am-card"><div class="am-val">${fR(t.grand)}</div><div class="am-lbl">Quote Value (incl. VAT)</div></div>
+    <div class="am-card"><div class="am-val">${sheets.length}</div><div class="am-lbl">Daily Sheets Recorded</div></div>
+    <div class="am-card"><div class="am-val" style="color:${totalProfit>=0?'#166534':'#991b1b'}">${fR(Math.abs(totalProfit))}</div><div class="am-lbl">${totalProfit>=0?'Total Profit':'Total Loss'} to Date</div></div>`;
+  // allowables table
+  let tHTML=`<thead><tr>
+    <th>DESCRIPTION</th><th>UNIT</th><th>QTY</th>
+    <th>LABOUR/unit</th><th>TRANSPORT/unit</th><th>MATERIAL/unit</th><th>PLANT/unit</th>
+    <th>TOTAL ALLOW/unit</th><th>MARKUP</th><th>CUSTOMER RATE</th><th>PROFIT/unit</th>
+  </tr></thead><tbody>`;
+  (q.sections||[]).forEach(sec=>{
+    tHTML+=`<tr class="as-hd"><td colspan="11">${sec.name}</td></tr>`;
+    (sec.items||[]).forEach(it=>{
+      const cost=(+it.labour||0)+(+it.transport||0)+(+it.material||0)+(+it.plant||0);
+      const rate=r2(cost*(1+(+q.markup||15)/100));
+      const profit=r2(cost*(+q.markup||15)/100);
+      tHTML+=`<tr>
+        <td>${it.desc}</td><td>${it.unit}</td><td>${(+it.qty||0).toFixed(2)}</td>
+        <td>${it.labour>0?fR(it.labour):'—'}</td><td>${it.transport>0?fR(it.transport):'—'}</td>
+        <td>${it.material>0?fR(it.material):'—'}</td><td>${it.plant>0?fR(it.plant):'—'}</td>
+        <td style="font-weight:600">${fR(cost)}</td>
+        <td>${q.markup}%</td>
         <td style="font-weight:600">${fR(rate)}</td>
         <td style="color:#166534">${fR(profit)}</td>
-        <td><span class="chk ${match?'ok':'fail'}">${match?'✓':'✗'}</span></td>`;
+      </tr>`;
+    });
+  });
+  tHTML+=`</tbody>`;
+  document.getElementById('allow-table').innerHTML=tHTML;
+  // daily sheets list
+  const dsc=document.getElementById('ds-list-container');
+  if(!sheets.length){
+    dsc.innerHTML=`<div class="empty"><div class="empty-icon">📋</div><h3>No daily sheets yet</h3><p>Site supervisors can add daily plant &amp; labour records here.</p></div>`;
+  } else {
+    dsc.innerHTML=`<div class="ds-list">${sheets.slice().reverse().map(s=>{
+      const pl=+s.profitLoss||0;
+      return `<div class="ds-item" onclick="openDailyEntry('${id}','${s.id}')">
+        <div class="dsi-date">${s.date||''}</div>
+        <div class="dsi-sup">${s.supervisor||'Unknown supervisor'}</div>
+        <div style="font-size:12px;color:var(--gray);flex:1">${s.diary?s.diary.slice(0,60)+'…':''}</div>
+        <div class="dsi-profit ${pl>=0?'pos':'neg'}">${pl>=0?'Profit':'Loss'}: ${fR(Math.abs(pl))}</div>
+        <button class="btn btn-xs btn-red" onclick="event.stopPropagation();deleteSheet('${id}','${s.id}')">✕</button>
+      </div>`;
+    }).join('')}</div>`;
+  }
+  // store current quote id for back button
+  document.getElementById('de-back-btn').onclick=()=>nav('allowables',id);
+}
+function deleteSheet(qid,sid){
+  confirmAction('Delete this daily sheet?','This cannot be undone.','Delete',()=>{
+    const quotes=load(); const qi=quotes.findIndex(x=>x.id===qid);
+    if(qi>-1){ quotes[qi].dailySheets=(quotes[qi].dailySheets||[]).filter(s=>s.id!==sid); save(quotes); }
+    closeModal(); renderAllowables(qid);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// DAILY ENTRY
+// ═══════════════════════════════════════════════════════
+let _deQuoteId=null;
+function openDailyEntry(qid,sheetId){
+  _deQuoteId=qid;
+  document.getElementById('de-quote-id').value=qid||'';
+  document.getElementById('de-sheet-id').value=sheetId||'';
+  const quotes=load(); const q=quotes.find(x=>x.id===qid);
+  document.getElementById('de-sub').textContent=`${q?q.number+' — '+q.client:''}`;
+
+  let sheet={};
+  if(sheetId && q){ sheet=(q.dailySheets||[]).find(s=>s.id===sheetId)||{}; }
+  document.getElementById('de-supervisor').value=sheet.supervisor||'';
+  document.getElementById('de-contract').value=sheet.contract||q?.number||'';
+  document.getElementById('de-date').value=sheet.date||new Date().toISOString().slice(0,10);
+  document.getElementById('de-diary').value=sheet.diary||'';
+
+  // allowables rows from quote operations
+  const tbody=document.getElementById('de-allow-body');
+  tbody.innerHTML='';
+  const savedOps=sheet.operations||[];
+  if(q){
+    let allItems=[];
+    (q.sections||[]).forEach(sec=>{
+      (sec.items||[]).forEach(it=>{
+        const cost=(+it.labour||0)+(+it.transport||0)+(+it.material||0)+(+it.plant||0);
+        allItems.push({desc:it.desc,labour:it.labour||0,plant:it.plant||0,allowTotal:cost});
+      });
+    });
+    allItems.forEach((it,i)=>{
+      const saved=savedOps[i]||{};
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td><input type="text" value="${it.desc}" readonly style="color:var(--gray)"/></td>
+        <td><input type="text" class="op-product" value="${saved.product||''}"/></td>
+        <td><input type="number" class="op-la" value="${saved.la||it.labour||''}" min="0" step="0.01" oninput="calcDaily()"/></td>
+        <td><input type="number" class="op-lt" value="${saved.lt||''}" min="0" step="0.01" oninput="calcDaily()"/></td>
+        <td><input type="number" class="op-pa" value="${saved.pa||it.plant||''}" min="0" step="0.01" oninput="calcDaily()"/></td>
+        <td><input type="number" class="op-pt" value="${saved.pt||''}" min="0" step="0.01" oninput="calcDaily()"/></td>`;
       tbody.appendChild(tr);
     });
-
-    // Section-level extras (e.g. Cart parking material R920, Red&Yellow labour R450)
-    if (sec.extra) {
-      const e = sec.extra;
-      const eRate = r2(e.amt * (1 + e.mk));
-      totCost   += e.amt;
-      totProfit += r2(e.amt * e.mk);
-      totQuote  += eRate;
-      const er = document.createElement("tr");
-      er.className = "aex";
-      er.innerHTML = `
-        <td colspan="7" style="padding-left:20px">${e.label} (${e.kind}: ${fR(e.amt)})</td>
-        <td style="font-weight:600">${fR(e.amt)}</td>
-        <td>${(e.mk*100).toFixed(0)}%</td>
-        <td style="font-weight:600">${fR(eRate)}</td>
-        <td style="color:#166534">${fR(r2(e.amt*e.mk))}</td>
-        <td></td>`;
-      tbody.appendChild(er);
+  }
+  // add blank rows if no items
+  if(!tbody.children.length){
+    for(let i=0;i<5;i++){
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td><input type="text" class="op-desc" placeholder="Operation"/></td><td><input type="text" class="op-product" placeholder="Product"/></td><td><input type="number" class="op-la" min="0" step="0.01" oninput="calcDaily()"/></td><td><input type="number" class="op-lt" min="0" step="0.01" oninput="calcDaily()"/></td><td><input type="number" class="op-pa" min="0" step="0.01" oninput="calcDaily()"/></td><td><input type="number" class="op-pt" min="0" step="0.01" oninput="calcDaily()"/></td>`;
+      tbody.appendChild(tr);
     }
-  });
-
-  // Grand total row
-  const sr = document.createElement("tr");
-  sr.className = "asum";
-  sr.innerHTML = `
-    <td colspan="7" style="padding:12px 8px">TOTALS (excl. VAT)</td>
-    <td>${fR(totCost)}</td>
-    <td></td>
-    <td>${fR(totQuote)}</td>
-    <td style="color:#4ade80">${fR(totProfit)}</td>
-    <td></td>`;
-  tbody.appendChild(sr);
-
-  // Summary cards
-  const vat = 0.15;
-  const quoteInc = r2(totQuote * (1 + vat));
-  const margin   = r2((totProfit / totQuote) * 100);
-  document.getElementById("scards").innerHTML = `
-    <div class="sc"><div class="sc-label">TOTAL COST<br>(excl. VAT)</div><div class="sc-value b">${fR(totCost)}</div></div>
-    <div class="sc"><div class="sc-label">QUOTE<br>(excl. VAT)</div><div class="sc-value">${fR(totQuote)}</div></div>
-    <div class="sc"><div class="sc-label">QUOTE<br>(incl. 15% VAT)</div><div class="sc-value b">${fR(quoteInc)}</div></div>
-    <div class="sc"><div class="sc-label">GROSS PROFIT<br>(excl. VAT)</div><div class="sc-value g">${fR(totProfit)}</div></div>
-    <div class="sc"><div class="sc-label">PROFIT<br>MARGIN</div><div class="sc-value g">${margin.toFixed(1)}%</div></div>`;
-}
-
-// ── DAILY SHEET ───────────────────────────────────────────────────────────
-function buildDaily() {
-  const daBody = document.getElementById("da-body");
-  for (let i = 0; i < 6; i++) {
-    daBody.insertAdjacentHTML("beforeend", `<tr>
-      <td><input type="text" placeholder="e.g. Paving 60mm"/></td>
-      <td><input type="text" placeholder="Product"/></td>
-      <td><input type="number" class="da-la" min="0" step="0.01" oninput="calcDaily()" placeholder="0"/></td>
-      <td><input type="number" class="da-lt" min="0" step="0.01" oninput="calcDaily()" placeholder="0"/></td>
-      <td><input type="number" class="da-pa" min="0" step="0.01" oninput="calcDaily()" placeholder="0"/></td>
-      <td><input type="number" class="da-pt" min="0" step="0.01" oninput="calcDaily()" placeholder="0"/></td>
-    </tr>`);
   }
-  const lcBody = document.getElementById("lc-body");
-  for (let i = 0; i < 6; i++) {
-    lcBody.insertAdjacentHTML("beforeend", `<tr>
-      <td><input type="text" placeholder="e.g. General worker"/></td>
-      <td><input type="number" class="lc-qty" min="0" step="1" oninput="calcDaily()" placeholder="0"/></td>
-      <td><input type="number" class="lc-hrs" min="0" step="0.5" oninput="calcDaily()" placeholder="0"/></td>
-      <td><input type="number" class="lc-rate" min="0" step="0.01" oninput="calcDaily()" placeholder="0.00"/></td>
-      <td class="lc-sub" style="font-weight:600"></td>
-    </tr>`);
-  }
-}
-
-function calcDaily() {
-  let labourAllow = 0, plantAllow = 0;
-  document.querySelectorAll(".da-la").forEach(el => labourAllow += parseFloat(el.value)||0);
-  document.querySelectorAll(".da-pa").forEach(el => plantAllow  += parseFloat(el.value)||0);
-
-  let labourCost = 0;
-  const qtys  = [...document.querySelectorAll(".lc-qty")];
-  const hrss  = [...document.querySelectorAll(".lc-hrs")];
-  const rates = [...document.querySelectorAll(".lc-rate")];
-  const subs  = [...document.querySelectorAll(".lc-sub")];
-  qtys.forEach((q, i) => {
-    const sub = (parseFloat(q.value)||0) * (parseFloat(hrss[i].value)||0) * (parseFloat(rates[i].value)||0);
-    subs[i].textContent = sub > 0 ? fR(sub) : "";
-    labourCost += sub;
+  // labour rows
+  const lbody=document.getElementById('de-labour-body');
+  lbody.innerHTML='';
+  const savedLabour=sheet.labourRows||[{},{},{},{},{}];
+  savedLabour.forEach(lr=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><input type="text" class="lr-desc" value="${lr.desc||''}" placeholder="e.g. General worker"/></td>
+      <td><input type="number" class="lr-qty" value="${lr.qty||''}" min="0" step="1" oninput="calcDaily()"/></td>
+      <td><input type="number" class="lr-hrs" value="${lr.hrs||''}" min="0" step="0.5" oninput="calcDaily()"/></td>
+      <td><input type="number" class="lr-rate" value="${lr.rate||''}" min="0" step="0.01" oninput="calcDaily()"/></td>
+      <td class="lr-sub" style="font-weight:600;padding:0 8px"></td>`;
+    lbody.appendChild(tr);
   });
+  // add extra empty labour row button
+  const addBtn=document.createElement('tr');
+  addBtn.innerHTML=`<td colspan="5" style="text-align:left;padding:4px 6px"><button class="add-row-btn" onclick="addLabourRow()">+ Add worker</button></td>`;
+  lbody.appendChild(addBtn);
 
-  const totalAllow = labourAllow + plantAllow;
-  const profit = Math.max(0, totalAllow - labourCost);
-  const loss   = Math.max(0, labourCost - totalAllow);
-
-  document.getElementById("da-la").textContent     = fR(labourAllow);
-  document.getElementById("da-pa").textContent     = fR(plantAllow);
-  document.getElementById("lc-total").textContent  = fR(labourCost);
-  document.getElementById("ds-la").textContent     = fR(labourAllow);
-  document.getElementById("ds-pa").textContent     = fR(plantAllow);
-  document.getElementById("ds-lc").textContent     = fR(labourCost);
-  document.getElementById("ds-profit").textContent = fR(profit);
-  document.getElementById("ds-loss").textContent   = fR(loss);
+  calcDaily();
+  nav('daily-entry');
 }
+function addLabourRow(){
+  const lbody=document.getElementById('de-labour-body');
+  const addBtnRow=lbody.lastChild;
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><input type="text" class="lr-desc" placeholder="e.g. General worker"/></td><td><input type="number" class="lr-qty" min="0" step="1" oninput="calcDaily()"/></td><td><input type="number" class="lr-hrs" min="0" step="0.5" oninput="calcDaily()"/></td><td><input type="number" class="lr-rate" min="0" step="0.01" oninput="calcDaily()"/></td><td class="lr-sub" style="font-weight:600;padding:0 8px"></td>`;
+  lbody.insertBefore(tr,addBtnRow);
+}
+function calcDaily(){
+  let la=0,pa=0;
+  document.querySelectorAll('.op-la').forEach(el=>la+=parseFloat(el.value)||0);
+  document.querySelectorAll('.op-pa').forEach(el=>pa+=parseFloat(el.value)||0);
+  const totalAllow=la+pa;
+  document.getElementById('de-la-tot').textContent=fR(la);
+  document.getElementById('de-pa-tot').textContent=fR(pa);
+  let lc=0;
+  const qtys=[...document.querySelectorAll('.lr-qty')];
+  const hrss=[...document.querySelectorAll('.lr-hrs')];
+  const rates=[...document.querySelectorAll('.lr-rate')];
+  const subs=[...document.querySelectorAll('.lr-sub')];
+  qtys.forEach((q,i)=>{
+    const sub=(parseFloat(q.value)||0)*(parseFloat(hrss[i]?.value)||0)*(parseFloat(rates[i]?.value)||0);
+    if(subs[i]) subs[i].textContent=sub>0?fR(sub):'';
+    lc+=sub;
+  });
+  document.getElementById('de-lc-tot').textContent=fR(lc);
+  const profit=Math.max(0,totalAllow-lc);
+  const loss=Math.max(0,lc-totalAllow);
+  const profitLoss=r2(totalAllow-lc);
+  document.getElementById('de-summary').innerHTML=`
+    <div class="dss-card dss-all"><div class="dss-label">① Labour Allowable</div><div class="dss-value">${fR(la)}</div></div>
+    <div class="dss-card dss-all"><div class="dss-label">② Plant Allowable</div><div class="dss-value">${fR(pa)}</div></div>
+    <div class="dss-card dss-cost"><div class="dss-label">③ Labour Cost</div><div class="dss-value">${fR(lc)}</div></div>
+    <div class="dss-card ${profitLoss>=0?'dss-profit':'dss-loss'}"><div class="dss-label">PROFIT</div><div class="dss-value">${fR(profit)}</div></div>
+    <div class="dss-card ${profitLoss>=0?'dss-profit':'dss-loss'}"><div class="dss-label">LOSS</div><div class="dss-value">${fR(loss)}</div></div>
+    <div class="dss-card dss-net"><div class="dss-label">NET</div><div class="dss-value">${fR(profitLoss)}</div></div>`;
+}
+function saveDailySheet(){
+  const qid=document.getElementById('de-quote-id').value;
+  const sid=document.getElementById('de-sheet-id').value;
+  const quotes=load(); const qi=quotes.findIndex(x=>x.id===qid); if(qi<0) return;
+  let la=0,pa=0,lc=0;
+  document.querySelectorAll('.op-la').forEach(el=>la+=parseFloat(el.value)||0);
+  document.querySelectorAll('.op-pa').forEach(el=>pa+=parseFloat(el.value)||0);
+  const qtys=[...document.querySelectorAll('.lr-qty')];
+  const hrss=[...document.querySelectorAll('.lr-hrs')];
+  const rates=[...document.querySelectorAll('.lr-rate')];
+  qtys.forEach((q,i)=>lc+=(parseFloat(q.value)||0)*(parseFloat(hrss[i]?.value)||0)*(parseFloat(rates[i]?.value)||0));
+  const operations=[...document.querySelectorAll('#de-allow-body tr')].map(tr=>({
+    product:tr.querySelector('.op-product')?.value||'',
+    la:parseFloat(tr.querySelector('.op-la')?.value)||0,
+    lt:parseFloat(tr.querySelector('.op-lt')?.value)||0,
+    pa:parseFloat(tr.querySelector('.op-pa')?.value)||0,
+    pt:parseFloat(tr.querySelector('.op-pt')?.value)||0,
+  }));
+  const labourRows=[...document.querySelectorAll('.lr-desc')].map((d,i)=>({
+    desc:d.value,
+    qty:parseFloat(qtys[i]?.value)||0,
+    hrs:parseFloat(hrss[i]?.value)||0,
+    rate:parseFloat(rates[i]?.value)||0,
+  })).filter(r=>r.desc);
+  const sheet={
+    id:sid||uid(),
+    supervisor:document.getElementById('de-supervisor').value,
+    contract:document.getElementById('de-contract').value,
+    date:document.getElementById('de-date').value,
+    diary:document.getElementById('de-diary').value,
+    operations,labourRows,
+    labourAllow:r2(la),plantAllow:r2(pa),labourCost:r2(lc),
+    profitLoss:r2(la+pa-lc)
+  };
+  const sheets=quotes[qi].dailySheets||[];
+  if(sid){ const si=sheets.findIndex(s=>s.id===sid); if(si>-1) sheets[si]=sheet; else sheets.push(sheet); }
+  else sheets.push(sheet);
+  quotes[qi].dailySheets=sheets;
+  if(quotes[qi].status==='approved') quotes[qi].status='active';
+  save(quotes);
+  nav('allowables',qid);
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════════════════
+let _modalCb=null;
+function confirmAction(title,body,okLabel,cb){
+  document.getElementById('cm-title').textContent=title;
+  document.getElementById('cm-body').textContent=body;
+  const ok=document.getElementById('cm-ok');
+  ok.textContent=okLabel;
+  ok.className='btn '+(okLabel==='Delete'||okLabel==='Reject'?'btn-red':'btn-green');
+  _modalCb=cb;
+  document.getElementById('confirm-modal').classList.add('open');
+}
+function closeModal(){ document.getElementById('confirm-modal').classList.remove('open'); _modalCb=null; }
+document.getElementById('cm-ok').onclick=()=>{ if(_modalCb) _modalCb(); };
+document.getElementById('confirm-modal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeModal(); });
+
+// ── BOOT ──
+nav('dashboard');
 </script>
 </body>
 </html>
