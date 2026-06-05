@@ -7,19 +7,18 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --navy:#1a1a2e;--navy2:#0f172a;--blue:#38bdf8;--green:#22c55e;
+  --navy:#1a1a2e;--blue:#38bdf8;--green:#22c55e;
   --yellow:#eab308;--red:#ef4444;--gray:#64748b;--light:#f1f5f9;
-  --white:#fff;--border:#e2e8f0;
+  --border:#e2e8f0;
 }
 body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f4;color:#1e293b;min-height:100vh}
-a{text-decoration:none;color:inherit}
 button{cursor:pointer;font-family:inherit}
 input,textarea,select{font-family:inherit}
 
 /* ── TOPBAR ── */
 .topbar{background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:12px 24px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3)}
 .topbar-brand{display:flex;align-items:center;gap:10px;cursor:pointer}
-.logo{width:36px;height:36px;background:var(--blue);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:var(--navy);letter-spacing:-1px}
+.logo{width:36px;height:36px;background:var(--blue);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:var(--navy)}
 .brand-name{font-size:16px;font-weight:700;letter-spacing:.5px}
 .brand-sub{font-size:10px;color:#94a3b8;margin-top:1px}
 .topbar-nav{display:flex;gap:4px}
@@ -30,8 +29,6 @@ input,textarea,select{font-family:inherit}
 /* ── LAYOUT ── */
 .view{display:none;padding:24px;max-width:1200px;margin:0 auto}
 .view.active{display:block}
-
-/* ── CARDS ── */
 .card{background:#fff;border-radius:10px;box-shadow:0 1px 12px rgba(0,0,0,.07);padding:28px;margin-bottom:20px}
 .card-sm{padding:18px}
 
@@ -52,7 +49,7 @@ input,textarea,select{font-family:inherit}
 .btn-xs{padding:4px 9px;font-size:11px}
 .btn-icon{padding:7px;border-radius:6px;background:var(--light);border:none;color:var(--gray)}.btn-icon:hover{background:var(--border);color:#1e293b}
 
-/* ── STATUS BADGES ── */
+/* ── BADGES ── */
 .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
 .s-draft{background:#f1f5f9;color:#475569}
 .s-sent{background:#eff6ff;color:#1d4ed8}
@@ -65,12 +62,9 @@ input,textarea,select{font-family:inherit}
 .qlist{display:flex;flex-direction:column;gap:12px}
 .qitem{background:#fff;border-radius:10px;padding:18px 22px;display:flex;align-items:center;gap:16px;box-shadow:0 1px 8px rgba(0,0,0,.06);cursor:pointer;transition:.15s;border-left:4px solid transparent}
 .qitem:hover{box-shadow:0 4px 18px rgba(0,0,0,.11);transform:translateY(-1px)}
-.qitem.s-draft{border-left-color:#94a3b8}
-.qitem.s-sent{border-left-color:#3b82f6}
-.qitem.s-approved{border-left-color:#22c55e}
-.qitem.s-rejected{border-left-color:#ef4444}
-.qitem.s-active{border-left-color:#eab308}
-.qitem.s-complete{border-left-color:#10b981}
+.qitem.s-draft{border-left-color:#94a3b8}.qitem.s-sent{border-left-color:#3b82f6}
+.qitem.s-approved{border-left-color:#22c55e}.qitem.s-rejected{border-left-color:#ef4444}
+.qitem.s-active{border-left-color:#eab308}.qitem.s-complete{border-left-color:#10b981}
 .qi-num{font-size:13px;font-weight:700;color:var(--gray);min-width:60px}
 .qi-client{flex:1}.qi-client strong{font-size:14px;display:block}.qi-client span{font-size:12px;color:var(--gray)}
 .qi-amount{text-align:right;min-width:120px}.qi-amount strong{font-size:14px;display:block}.qi-amount span{font-size:11px;color:var(--gray)}
@@ -83,27 +77,20 @@ input,textarea,select{font-family:inherit}
 .fsearch{padding:8px 14px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;outline:none;min-width:200px;flex:1;max-width:300px}
 .fsearch:focus{border-color:var(--blue)}
 
-/* ── STATS ROW ── */
+/* ── STATS ── */
 .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px}
 .stat{background:#fff;border-radius:10px;padding:16px;text-align:center;box-shadow:0 1px 8px rgba(0,0,0,.06)}
 .stat-n{font-size:24px;font-weight:700}.stat-l{font-size:11px;color:var(--gray);margin-top:3px}
 
-/* ── FORM LAYOUT ── */
+/* ── FORM ── */
 .fg{display:grid;gap:16px}
-.fg2{grid-template-columns:1fr 1fr}
-.fg3{grid-template-columns:1fr 1fr 1fr}
-.fg4{grid-template-columns:1fr 1fr 1fr 1fr}
+.fg2{grid-template-columns:1fr 1fr}.fg3{grid-template-columns:1fr 1fr 1fr}
 label{display:block;font-size:11px;font-weight:700;color:#374151;margin-bottom:5px;letter-spacing:.4px;text-transform:uppercase}
 .fi{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;outline:none;background:#fff;transition:.15s}
 .fi:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(56,189,248,.12)}
 textarea.fi{resize:vertical;min-height:70px}
-select.fi{cursor:pointer}
 
 /* ── SECTION BUILDER ── */
-.section-block{border:1.5px solid var(--border);border-radius:10px;margin-bottom:16px;overflow:hidden}
-.section-hd{background:var(--light);padding:12px 16px;display:flex;align-items:center;gap:10px}
-.section-hd input{flex:1;border:none;background:transparent;font-size:14px;font-weight:700;outline:none;color:var(--navy)}
-.section-body{padding:12px}
 .items-table{width:100%;border-collapse:collapse;font-size:12px}
 .items-table th{background:#1e293b;color:#e2e8f0;padding:7px 6px;text-align:center;font-size:10px;font-weight:700;letter-spacing:.4px}
 .items-table th:first-child{text-align:left}
@@ -111,7 +98,7 @@ select.fi{cursor:pointer}
 .items-table td input{width:100%;border:1px solid transparent;border-radius:4px;padding:5px 4px;font-size:12px;outline:none;text-align:center;background:transparent}
 .items-table td:first-child input{text-align:left}
 .items-table td input:focus{border-color:var(--blue);background:#f0f9ff}
-.item-calc{background:var(--light);font-weight:600;text-align:right;padding:5px 8px;font-size:12px;color:#1e293b}
+.item-calc{background:var(--light);font-weight:600;text-align:right;padding:5px 8px;font-size:12px}
 .add-row-btn{margin-top:8px;font-size:11px;color:var(--blue);cursor:pointer;background:none;border:none;font-weight:600}
 .add-row-btn:hover{text-decoration:underline}
 
@@ -128,8 +115,7 @@ select.fi{cursor:pointer}
 .qp-badge{display:inline-block;background:var(--navy);color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:3px 12px;border-radius:4px;margin-bottom:14px}
 .qp-meta{display:grid;grid-template-columns:1fr 1fr;gap:3px 20px;font-size:13px;margin-bottom:22px}
 .qp-row{display:flex;gap:6px;padding:2px 0}
-.qp-l{font-weight:600;color:#374151;min-width:80px}
-.qp-v{color:#4b5563}
+.qp-l{font-weight:600;color:#374151;min-width:80px}.qp-v{color:#4b5563}
 .qt{width:100%;border-collapse:collapse;font-size:13px}
 .qt thead tr{background:var(--navy);color:#fff}
 .qt th{padding:10px;text-align:right;font-size:11px;font-weight:600;letter-spacing:.4px}
@@ -154,20 +140,21 @@ select.fi{cursor:pointer}
 .status-watermark{text-align:center;margin:16px 0}
 .status-watermark span{display:inline-block;padding:6px 24px;border-radius:6px;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
 
-/* ── ALLOWABLES VIEW ── */
+/* ── ALLOWABLES ── */
 .allow-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
 .am-card{background:#fff;border-radius:10px;padding:16px;text-align:center;box-shadow:0 1px 8px rgba(0,0,0,.06)}
 .am-val{font-size:20px;font-weight:700;color:var(--navy)}.am-lbl{font-size:11px;color:var(--gray);margin-top:3px}
 .at{width:100%;border-collapse:collapse;font-size:12px}
 .at th{background:#1e293b;color:#e2e8f0;padding:9px 7px;font-size:11px;font-weight:600;text-align:center;border:1px solid #334155}
-.at th:first-child,.at td:first-child{text-align:left;min-width:180px}
+.at th:first-child,.at td:first-child{text-align:left;min-width:160px}
 .at td{padding:7px 6px;border-bottom:1px solid var(--light);text-align:center}
 .at .as-hd td{background:var(--light);font-weight:700;color:var(--navy)}
 .at .as-tot td{background:var(--navy);color:#fff;font-weight:700;padding:11px 7px}
-.chk{display:inline-block;width:22px;height:22px;border-radius:50%;font-size:12px;line-height:22px;text-align:center;font-weight:700}
-.chk.ok{background:#dcfce7;color:#166534}.chk.fail{background:#fee2e2;color:#991b1b}
+.prog-bar{height:7px;background:#e2e8f0;border-radius:4px;overflow:hidden;min-width:70px;margin:3px auto 0}
+.prog-fill{height:100%;background:var(--green);border-radius:4px;transition:.3s}
+.prog-fill.warn{background:var(--yellow)}.prog-fill.over{background:var(--red)}
 
-/* ── DAILY SHEETS ── */
+/* ── DAILY SHEETS LIST ── */
 .ds-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
 .ds-item{background:#fff;border-radius:8px;padding:14px 18px;display:flex;align-items:center;gap:16px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:.15s}
 .ds-item:hover{box-shadow:0 3px 14px rgba(0,0,0,.1)}
@@ -176,8 +163,26 @@ select.fi{cursor:pointer}
 .dsi-profit{font-weight:700;font-size:14px}
 .dsi-profit.pos{color:#166534}.dsi-profit.neg{color:#991b1b}
 
-/* ── DAILY ENTRY FORM ── */
-.daily-form{max-width:800px;margin:0 auto}
+/* ── OPERATION SELECTOR ── */
+.op-sel-list{display:flex;flex-direction:column;gap:6px;max-height:460px;overflow-y:auto;margin-bottom:20px;padding-right:4px}
+.op-sel-sec{font-size:10px;font-weight:700;color:var(--gray);letter-spacing:1px;text-transform:uppercase;padding:10px 0 5px;border-bottom:1px solid var(--border);margin-top:6px}
+.op-sel-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:.15s;user-select:none}
+.op-sel-item:hover{border-color:var(--blue);background:#f0f9ff}
+.op-sel-item.checked{border-color:var(--green);background:#f0fdf4}
+.op-sel-item input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:var(--green);flex-shrink:0}
+.op-sel-desc{flex:1}
+.op-sel-desc strong{font-size:13px;font-weight:600;display:block}
+.op-sel-desc span{font-size:11px;color:var(--gray);margin-top:2px;display:block}
+.op-sel-meta{text-align:right;font-size:11px;color:var(--gray);line-height:1.8;flex-shrink:0}
+.op-sel-meta strong{color:#166534}
+.op-sel-prog{margin-top:5px}
+.op-sel-prog-bar{height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden;width:100%}
+.op-sel-prog-fill{height:100%;background:var(--green);border-radius:3px}
+.op-sel-prog-fill.warn{background:var(--yellow)}.op-sel-prog-fill.over{background:var(--red)}
+.op-sel-prog-text{font-size:10px;color:var(--gray);margin-top:2px}
+
+/* ── DAILY ENTRY ── */
+.daily-form{max-width:820px;margin:0 auto}
 .dsbar{background:var(--navy);color:#fff;padding:8px 12px;font-size:11px;font-weight:700;letter-spacing:1.5px;border-radius:4px 4px 0 0;text-align:center}
 .dsdiary{width:100%;min-height:68px;border:1.5px solid var(--border);border-top:none;border-radius:0 0 6px 6px;padding:10px;font-size:13px;resize:vertical;outline:none;font-family:inherit;margin-bottom:18px}
 .dsdiary:focus{border-color:var(--blue)}
@@ -190,9 +195,10 @@ select.fi{cursor:pointer}
 .dst td:first-child input{text-align:left}
 .dst input:focus{background:#f0f9ff}
 .dst .tr-foot td{background:var(--light);font-weight:700;padding:8px 6px}
+.dst .tr-sec td{background:#f8fafc;font-size:10px;font-weight:700;color:var(--gray);letter-spacing:.8px;text-transform:uppercase;padding:7px 8px}
 .ds-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
 .dss-card{border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:4px}
-.dss-label{font-size:11px;font-weight:600;color:inherit;opacity:.7}
+.dss-label{font-size:11px;font-weight:600;opacity:.7}
 .dss-value{font-size:20px;font-weight:700}
 .dss-all{background:#ecfdf5;color:#065f46}
 .dss-cost{background:#eff6ff;color:#1e40af}
@@ -208,13 +214,12 @@ select.fi{cursor:pointer}
 .modal p{font-size:13px;color:var(--gray);margin-bottom:20px;line-height:1.6}
 .modal-actions{display:flex;gap:10px;justify-content:flex-end}
 
-/* ── EMPTY STATE ── */
+/* ── EMPTY ── */
 .empty{text-align:center;padding:60px 20px;color:var(--gray)}
 .empty-icon{font-size:48px;margin-bottom:16px}
 .empty h3{font-size:16px;font-weight:600;margin-bottom:8px;color:#475569}
 .empty p{font-size:13px;line-height:1.6;max-width:360px;margin:0 auto 20px}
 
-/* ── PRINT ── */
 @media print{
   .topbar,.detail-toolbar,.modal-bg{display:none!important}
   .quote-paper{box-shadow:none!important;padding:20px!important}
@@ -222,17 +227,15 @@ select.fi{cursor:pointer}
 }
 @media(max-width:768px){
   .stats,.allow-meta{grid-template-columns:repeat(2,1fr)}
-  .fg2,.fg3,.fg4{grid-template-columns:1fr}
+  .fg2,.fg3{grid-template-columns:1fr}
   .qp-footer,.sig-row{grid-template-columns:1fr}
-  .view{padding:14px}
-  .card{padding:18px}
+  .view{padding:14px}.card{padding:18px}
   .ds-summary{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
 <header class="topbar">
   <div class="topbar-brand" onclick="nav('dashboard')">
     <div class="logo">SC</div>
@@ -257,7 +260,7 @@ select.fi{cursor:pointer}
   </div>
 </div>
 
-<!-- ═══════════ VIEW: DASHBOARD ═══════════ -->
+<!-- ═══════════ DASHBOARD ═══════════ -->
 <div class="view active" id="view-dashboard">
   <div class="ph">
     <div><h2>Dashboard</h2><p>Overview of all quotes and site activity</p></div>
@@ -270,7 +273,7 @@ select.fi{cursor:pointer}
   </div>
 </div>
 
-<!-- ═══════════ VIEW: ALL QUOTES ═══════════ -->
+<!-- ═══════════ ALL QUOTES ═══════════ -->
 <div class="view" id="view-quotes">
   <div class="ph">
     <div><h2>All Quotes</h2><p>Manage and track all customer estimates</p></div>
@@ -288,7 +291,7 @@ select.fi{cursor:pointer}
   <div id="quote-list"></div>
 </div>
 
-<!-- ═══════════ VIEW: QUOTE EDITOR ═══════════ -->
+<!-- ═══════════ QUOTE EDITOR ═══════════ -->
 <div class="view" id="view-quote-edit">
   <div class="ph">
     <div><h2 id="qe-title">New Quote</h2><p>Fill in client details and line items</p></div>
@@ -309,39 +312,36 @@ select.fi{cursor:pointer}
       <div><label>Default Markup %</label><input class="fi" type="number" id="qe-markup" value="15" min="0" max="100" step="0.5"/></div>
     </div>
   </div>
-
   <div id="sections-container"></div>
-
   <div style="display:flex;gap:10px;margin-bottom:20px">
     <button class="btn btn-ghost" onclick="addSection()">+ Add Section</button>
     <button class="btn btn-ghost" onclick="addSection('Extra / Miscellaneous')">+ Add Misc Section</button>
   </div>
-
   <div class="card">
     <div style="font-size:13px;font-weight:700;color:var(--gray);letter-spacing:.5px;margin-bottom:14px">TERMS &amp; CONDITIONS</div>
-    <textarea class="fi" id="qe-terms" rows="3" placeholder="e.g. 50% deposit required on acceptance. All materials remain property of Summertree Civils until paid in full.">50% deposit required on acceptance of the quotation. All materials used remain the property of Summertree Civils until account is paid in full.</textarea>
+    <textarea class="fi" id="qe-terms" rows="3">50% deposit required on acceptance of the quotation. All materials used remain the property of Summertree Civils until account is paid in full.</textarea>
   </div>
 </div>
 
-<!-- ═══════════ VIEW: QUOTE DETAIL ═══════════ -->
+<!-- ═══════════ QUOTE DETAIL ═══════════ -->
 <div class="view" id="view-quote-detail">
   <div class="detail-toolbar" id="detail-toolbar"></div>
   <div class="quote-paper" id="quote-paper"></div>
 </div>
 
-<!-- ═══════════ VIEW: ALLOWABLES ═══════════ -->
+<!-- ═══════════ ALLOWABLES ═══════════ -->
 <div class="view" id="view-allowables">
   <div class="ph">
     <div><h2 id="allow-title">Allowables</h2><p id="allow-sub">Internal cost tracking for this contract</p></div>
     <div style="display:flex;gap:10px">
-      <button class="btn btn-ghost" onclick="history.back()">← Back</button>
-      <button class="btn btn-primary" onclick="openDailyEntry()">+ New Daily Sheet</button>
+      <button class="btn btn-ghost" id="allow-back-btn">← Back</button>
+      <button class="btn btn-primary" id="allow-new-sheet-btn">+ New Daily Sheet</button>
     </div>
   </div>
   <div class="allow-meta" id="allow-meta"></div>
   <div class="card" style="margin-bottom:20px">
-    <div style="font-size:14px;font-weight:700;margin-bottom:14px">Allowable Rates per Operation</div>
-    <table class="at" id="allow-table"></table>
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px">Contract Journal — Progress per Operation</div>
+    <div style="overflow-x:auto"><table class="at" id="allow-table"></table></div>
   </div>
   <div class="card">
     <div style="font-size:14px;font-weight:700;margin-bottom:14px">Daily Site Sheets</div>
@@ -349,7 +349,29 @@ select.fi{cursor:pointer}
   </div>
 </div>
 
-<!-- ═══════════ VIEW: DAILY ENTRY ═══════════ -->
+<!-- ═══════════ OPERATION SELECTOR ═══════════ -->
+<div class="view" id="view-daily-select">
+  <div class="ph">
+    <div><h2>Select Today's Operations</h2><p id="ds-sel-sub">Tick the items the team is working on today, then open the sheet</p></div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-ghost" id="ds-sel-back">← Back</button>
+      <button class="btn btn-primary" onclick="startNewDailySheet()">Open Sheet →</button>
+    </div>
+  </div>
+  <div class="card" style="max-width:720px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="font-size:13px;color:var(--gray)">Select the operations for today — all are pre-ticked</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-xs btn-ghost" onclick="selAll(true)">Select All</button>
+        <button class="btn btn-xs btn-ghost" onclick="selAll(false)">Clear All</button>
+      </div>
+    </div>
+    <div id="op-sel-list" class="op-sel-list"></div>
+    <input type="hidden" id="ds-sel-qid"/>
+  </div>
+</div>
+
+<!-- ═══════════ DAILY ENTRY ═══════════ -->
 <div class="view" id="view-daily-entry">
   <div class="ph">
     <div><h2>Daily Site Sheet</h2><p id="de-sub">Record daily plant &amp; labour against allowables</p></div>
@@ -364,7 +386,7 @@ select.fi{cursor:pointer}
     <div class="card card-sm" style="margin-bottom:16px">
       <div class="fg fg3">
         <div><label>Supervisor</label><input class="fi" id="de-supervisor" placeholder="Name"/></div>
-        <div><label>Contract #</label><input class="fi" id="de-contract" placeholder="e.g. 451"/></div>
+        <div><label>Contract #</label><input class="fi" id="de-contract"/></div>
         <div><label>Date</label><input class="fi" type="date" id="de-date"/></div>
       </div>
     </div>
@@ -372,32 +394,36 @@ select.fi{cursor:pointer}
     <textarea class="dsdiary" id="de-diary" placeholder="Notes for the day…"></textarea>
     <div style="margin-bottom:14px">
       <div class="dsbar">DAILY ALLOWABLES</div>
-      <table class="dst">
+      <div style="overflow-x:auto">
+      <table class="dst" style="min-width:650px">
         <thead><tr>
-          <th style="width:26%">OPERATION</th><th style="width:20%">PRODUCT</th>
+          <th style="width:27%;text-align:left">OPERATION</th>
+          <th style="width:16%">PRODUCT</th>
+          <th style="width:8%">QTY TODAY</th>
           <th>LABOUR ALLOW</th><th>LABOUR TOTAL</th>
           <th>PLANT ALLOW</th><th>PLANT TOTAL</th>
         </tr></thead>
         <tbody id="de-allow-body"></tbody>
         <tfoot>
           <tr class="tr-foot">
-            <td colspan="2" style="text-align:right;padding-right:10px;font-size:11px">① TOTAL LABOUR ALLOWABLE</td>
+            <td colspan="3" style="text-align:right;padding-right:10px;font-size:11px">① TOTAL LABOUR ALLOWABLE</td>
             <td colspan="2" id="de-la-tot" style="color:#065f46;font-size:13px;font-weight:700"></td>
             <td colspan="2"></td>
           </tr>
           <tr class="tr-foot">
-            <td colspan="2" style="text-align:right;padding-right:10px;font-size:11px">② TOTAL PLANT ALLOWABLE</td>
+            <td colspan="3" style="text-align:right;padding-right:10px;font-size:11px">② TOTAL PLANT ALLOWABLE</td>
             <td colspan="2"></td>
             <td colspan="2" id="de-pa-tot" style="color:#065f46;font-size:13px;font-weight:700"></td>
           </tr>
         </tfoot>
       </table>
+      </div>
     </div>
     <div style="margin-bottom:14px">
       <div class="dsbar">LABOUR COST</div>
       <table class="dst">
         <thead><tr>
-          <th style="width:36%">LABOUR</th><th>QTY</th><th>HRS</th><th>RATE (R)</th><th>SUB-TOTAL</th>
+          <th style="width:36%;text-align:left">LABOUR</th><th>QTY</th><th>HRS</th><th>RATE (R)</th><th>SUB-TOTAL</th>
         </tr></thead>
         <tbody id="de-labour-body"></tbody>
         <tfoot>
@@ -414,18 +440,52 @@ select.fi{cursor:pointer}
 
 <script>
 // ═══════════════════════════════════════════════════════
-// DATA LAYER
+// DATA
 // ═══════════════════════════════════════════════════════
-function load(){return JSON.parse(localStorage.getItem('sc_quotes')||'[]')}
-function save(q){localStorage.setItem('sc_quotes',JSON.stringify(q))}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+const load=()=>JSON.parse(localStorage.getItem('sc_quotes')||'[]');
+const save=q=>localStorage.setItem('sc_quotes',JSON.stringify(q));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const fR=n=>'R '+parseFloat(n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+const r2=n=>Math.round((n||0)*100)/100;
 function nextNum(){
   const q=load(); if(!q.length) return 'Q-001';
   const nums=q.map(x=>parseInt((x.number||'Q-000').split('-')[1]||0));
   return 'Q-'+(Math.max(...nums)+1).toString().padStart(3,'0');
 }
-const fR=n=>'R '+parseFloat(n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
-const r2=n=>Math.round((n||0)*100)/100;
+function calcTotal(q){
+  let sub=0;
+  (q.sections||[]).forEach(sec=>(sec.items||[]).forEach(it=>{
+    const cost=(+it.labour||0)+(+it.transport||0)+(+it.material||0)+(+it.plant||0);
+    sub+=r2(cost*(1+(+q.markup||15)/100))*(+it.qty||0);
+  }));
+  const vat=r2(sub*0.15);
+  return {sub:r2(sub),vat,grand:r2(sub+vat)};
+}
+
+// Build journal from quote's sections — called once on approval
+function buildJournal(q){
+  return (q.sections||[]).flatMap(sec=>
+    (sec.items||[]).map(it=>({
+      id:uid(), section:sec.name, desc:it.desc, unit:it.unit||'m²',
+      qtyQuoted:+it.qty||0,
+      labourAllow:+it.labour||0, plantAllow:+it.plant||0,
+      allowTotal:(+it.labour||0)+(+it.transport||0)+(+it.material||0)+(+it.plant||0)
+    }))
+  );
+}
+
+// Compute qty done per journal item across all saved daily sheets
+function journalProgress(q){
+  const map={};
+  (q.journal||[]).forEach(ji=>{ map[ji.id]=0; });
+  (q.dailySheets||[]).forEach(sheet=>{
+    (sheet.operations||[]).forEach(op=>{
+      if(op.journalId && map[op.journalId]!==undefined)
+        map[op.journalId]+=parseFloat(op.qty)||0;
+    });
+  });
+  return map;
+}
 
 // ═══════════════════════════════════════════════════════
 // ROUTING
@@ -451,44 +511,32 @@ function nav(view,arg){
 // ═══════════════════════════════════════════════════════
 function renderDashboard(){
   const quotes=load();
-  const counts={draft:0,sent:0,approved:0,active:0,rejected:0};
-  quotes.forEach(q=>{ if(counts[q.status]!==undefined) counts[q.status]++; });
+  const c={draft:0,sent:0,approved:0,active:0,rejected:0};
+  quotes.forEach(q=>{ if(c[q.status]!==undefined) c[q.status]++; });
   document.getElementById('dash-stats').innerHTML=`
     <div class="stat"><div class="stat-n">${quotes.length}</div><div class="stat-l">Total Quotes</div></div>
-    <div class="stat"><div class="stat-n" style="color:#94a3b8">${counts.draft}</div><div class="stat-l">Draft</div></div>
-    <div class="stat"><div class="stat-n" style="color:#3b82f6">${counts.sent}</div><div class="stat-l">Sent</div></div>
-    <div class="stat"><div class="stat-n" style="color:#22c55e">${counts.approved}</div><div class="stat-l">Approved</div></div>
-    <div class="stat"><div class="stat-n" style="color:#eab308">${counts.active}</div><div class="stat-l">Active on Site</div></div>`;
+    <div class="stat"><div class="stat-n" style="color:#94a3b8">${c.draft}</div><div class="stat-l">Draft</div></div>
+    <div class="stat"><div class="stat-n" style="color:#3b82f6">${c.sent}</div><div class="stat-l">Sent</div></div>
+    <div class="stat"><div class="stat-n" style="color:#22c55e">${c.approved}</div><div class="stat-l">Approved</div></div>
+    <div class="stat"><div class="stat-n" style="color:#eab308">${c.active}</div><div class="stat-l">Active on Site</div></div>`;
   const recent=quotes.slice(-5).reverse();
-  document.getElementById('dash-recent').innerHTML=recent.length?
-    recent.map(q=>quoteItemHTML(q)).join('')
-    :`<div class="empty"><div class="empty-icon">📋</div><h3>No quotes yet</h3><p>Create your first quote to get started.</p><button class="btn btn-primary" onclick="nav('quote-edit','new')">+ New Quote</button></div>`;
+  document.getElementById('dash-recent').innerHTML=recent.length
+    ? recent.map(quoteItemHTML).join('')
+    : `<div class="empty"><div class="empty-icon">📋</div><h3>No quotes yet</h3><p>Create your first quote to get started.</p><button class="btn btn-primary" onclick="nav('quote-edit','new')">+ New Quote</button></div>`;
 }
 
 // ═══════════════════════════════════════════════════════
 // QUOTE LIST
 // ═══════════════════════════════════════════════════════
 function quoteItemHTML(q){
-  const total=calcTotal(q);
+  const t=calcTotal(q);
   return `<div class="qitem s-${q.status}" onclick="nav('quote-detail','${q.id}')">
     <div class="qi-num">${q.number||''}</div>
     <div class="qi-client"><strong>${q.client||'Unnamed'}</strong><span>${q.site||''}</span></div>
     <div><span class="badge s-${q.status}">${q.status}</span></div>
-    <div class="qi-amount"><strong>${fR(total.grand)}</strong><span>incl. VAT</span></div>
+    <div class="qi-amount"><strong>${fR(t.grand)}</strong><span>incl. VAT</span></div>
     <div class="qi-date">${q.date||''}</div>
   </div>`;
-}
-function calcTotal(q){
-  let sub=0;
-  (q.sections||[]).forEach(sec=>{
-    (sec.items||[]).forEach(it=>{
-      const cost=(+it.labour||0)+(+it.transport||0)+(+it.material||0)+(+it.plant||0);
-      const rate=r2(cost*(1+(+q.markup||15)/100));
-      sub+=rate*(+it.qty||0);
-    });
-  });
-  const vat=r2(sub*0.15);
-  return {sub:r2(sub),vat,grand:r2(sub+vat)};
 }
 function setFilter(el,f){
   _currentFilter=f;
@@ -501,10 +549,9 @@ function renderQuoteList(){
   const search=(document.getElementById('q-search')?.value||'').toLowerCase();
   if(_currentFilter!=='all') quotes=quotes.filter(q=>q.status===_currentFilter);
   if(search) quotes=quotes.filter(q=>(q.client||'').toLowerCase().includes(search)||(q.site||'').toLowerCase().includes(search));
-  quotes=quotes.slice().reverse();
-  document.getElementById('quote-list').innerHTML=quotes.length?
-    `<div class="qlist">${quotes.map(q=>quoteItemHTML(q)).join('')}</div>`
-    :`<div class="empty"><div class="empty-icon">🔍</div><h3>No quotes found</h3><p>Try a different filter or search term.</p></div>`;
+  document.getElementById('quote-list').innerHTML=quotes.length
+    ? `<div class="qlist">${quotes.slice().reverse().map(quoteItemHTML).join('')}</div>`
+    : `<div class="empty"><div class="empty-icon">🔍</div><h3>No quotes found</h3><p>Try a different filter or search term.</p></div>`;
 }
 
 // ═══════════════════════════════════════════════════════
@@ -515,10 +562,7 @@ function renderQuoteEdit(id){
   _editId=(id==='new')?null:id;
   document.getElementById('qe-title').textContent=_editId?'Edit Quote':'New Quote';
   let q={sections:[],markup:15,date:new Date().toISOString().slice(0,10)};
-  if(_editId){
-    const found=load().find(x=>x.id===_editId);
-    if(found) q=found;
-  }
+  if(_editId){ const f=load().find(x=>x.id===_editId); if(f) q=f; }
   document.getElementById('qe-client').value=q.client||'';
   document.getElementById('qe-attention').value=q.attention||'';
   document.getElementById('qe-site').value=q.site||'';
@@ -527,11 +571,8 @@ function renderQuoteEdit(id){
   document.getElementById('qe-terms').value=q.terms||'50% deposit required on acceptance of the quotation. All materials used remain the property of Summertree Civils until account is paid in full.';
   const sc=document.getElementById('sections-container');
   sc.innerHTML='';
-  if(!q.sections||!q.sections.length){
-    addSection('Green Section');
-  } else {
-    q.sections.forEach(s=>addSection(s.name,s.items));
-  }
+  if(!q.sections||!q.sections.length) addSection('Green Section');
+  else q.sections.forEach(s=>addSection(s.name,s.items));
 }
 function addSection(name,items){
   const sid=uid();
@@ -539,59 +580,56 @@ function addSection(name,items){
   const div=document.createElement('div');
   div.className='card'; div.id='sec-'+sid;
   div.innerHTML=`
-    <div class="section-hd">
-      <input type="text" value="${name||'New Section'}" placeholder="Section name" style="font-size:14px;font-weight:700;border:none;background:transparent;outline:none;flex:1;color:var(--navy)"/>
-      <button class="btn btn-xs btn-ghost" onclick="document.getElementById('sec-${sid}').remove()">Remove</button>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <input type="text" value="${name||'New Section'}" style="flex:1;font-size:14px;font-weight:700;border:none;border-bottom:2px solid var(--border);padding:4px 0;outline:none;color:var(--navy);background:transparent"/>
+      <button class="btn btn-xs btn-ghost" onclick="document.getElementById('sec-${sid}').remove()">Remove Section</button>
     </div>
     <div style="overflow-x:auto">
-    <table class="items-table" style="width:100%;min-width:750px">
+    <table class="items-table" style="min-width:700px">
       <thead><tr>
         <th style="width:28%;text-align:left">DESCRIPTION</th>
         <th style="width:6%">UNIT</th><th style="width:7%">QTY</th>
         <th>LABOUR/unit</th><th>TRANSPORT/unit</th><th>MATERIAL/unit</th><th>PLANT/unit</th>
-        <th>RATE/unit</th><th style="width:5%"></th>
+        <th>AMOUNT</th><th style="width:4%"></th>
       </tr></thead>
       <tbody id="items-${sid}"></tbody>
     </table>
     </div>
     <button class="add-row-btn" onclick="addItem('${sid}')">+ Add line item</button>`;
   sc.appendChild(div);
-  if(items&&items.length){ items.forEach(it=>addItem(sid,it)); }
+  if(items&&items.length) items.forEach(it=>addItem(sid,it));
   else { addItem(sid); addItem(sid); }
 }
 function addItem(sid,it){
   it=it||{};
+  const rid=Math.random().toString(36).slice(2,7);
   const tbody=document.getElementById('items-'+sid);
   const tr=document.createElement('tr');
   tr.innerHTML=`
     <td><input type="text" value="${it.desc||''}" placeholder="Description"/></td>
-    <td><input type="text" value="${it.unit||'m²'}" style="width:50px"/></td>
+    <td><input type="text" value="${it.unit||'m²'}" style="width:46px"/></td>
     <td><input type="number" class="qty" value="${it.qty||''}" min="0" step="0.01" oninput="recalcRow(this)"/></td>
     <td><input type="number" class="cost-l" value="${it.labour||''}" min="0" step="0.01" oninput="recalcRow(this)" placeholder="0"/></td>
     <td><input type="number" class="cost-t" value="${it.transport||''}" min="0" step="0.01" oninput="recalcRow(this)" placeholder="0"/></td>
     <td><input type="number" class="cost-m" value="${it.material||''}" min="0" step="0.01" oninput="recalcRow(this)" placeholder="0"/></td>
     <td><input type="number" class="cost-p" value="${it.plant||''}" min="0" step="0.01" oninput="recalcRow(this)" placeholder="0"/></td>
-    <td class="item-calc" id="rc-${sid}-${Math.random().toString(36).slice(2,7)}">—</td>
-    <td><button class="btn-icon" onclick="this.closest('tr').remove()" title="Remove">✕</button></td>`;
+    <td class="item-calc" id="rc-${rid}">—</td>
+    <td><button class="btn-icon" onclick="this.closest('tr').remove()">✕</button></td>`;
   tbody.appendChild(tr);
   recalcRow(tr.querySelector('.qty'));
 }
 function recalcRow(inp){
   const tr=inp.closest('tr');
-  const markup=parseFloat(document.getElementById('qe-markup').value)||15;
+  const mk=parseFloat(document.getElementById('qe-markup').value)||15;
   const qty=parseFloat(tr.querySelector('.qty').value)||0;
-  const l=parseFloat(tr.querySelector('.cost-l').value)||0;
-  const t=parseFloat(tr.querySelector('.cost-t').value)||0;
-  const m=parseFloat(tr.querySelector('.cost-m').value)||0;
-  const p=parseFloat(tr.querySelector('.cost-p').value)||0;
-  const total=l+t+m+p;
-  const rate=r2(total*(1+markup/100));
-  const amount=r2(rate*qty);
+  const cost=(parseFloat(tr.querySelector('.cost-l').value)||0)+(parseFloat(tr.querySelector('.cost-t').value)||0)+(parseFloat(tr.querySelector('.cost-m').value)||0)+(parseFloat(tr.querySelector('.cost-p').value)||0);
+  const amount=r2(r2(cost*(1+mk/100))*qty);
   const cell=tr.querySelector('[id^="rc-"]');
   if(cell) cell.textContent=amount>0?fR(amount):'—';
 }
 function saveQuote(){
   const quotes=load();
+  const existing=_editId?quotes.find(x=>x.id===_editId):null;
   const sec=[...document.querySelectorAll('#sections-container .card')].map(div=>{
     const name=div.querySelector('input[type=text]')?.value||'Section';
     const items=[...div.querySelectorAll('tbody tr')].map(tr=>({
@@ -607,16 +645,17 @@ function saveQuote(){
   });
   const q={
     id:_editId||uid(),
-    number:_editId?(quotes.find(x=>x.id===_editId)||{}).number||nextNum():nextNum(),
+    number:existing?.number||nextNum(),
     client:document.getElementById('qe-client').value,
     attention:document.getElementById('qe-attention').value,
     site:document.getElementById('qe-site').value,
     date:document.getElementById('qe-date').value,
     markup:parseFloat(document.getElementById('qe-markup').value)||15,
     terms:document.getElementById('qe-terms').value,
-    status:_editId?(quotes.find(x=>x.id===_editId)||{}).status||'draft':'draft',
+    status:existing?.status||'draft',
     sections:sec,
-    dailySheets:_editId?(quotes.find(x=>x.id===_editId)||{}).dailySheets||[]:[]
+    journal:existing?.journal||null,
+    dailySheets:existing?.dailySheets||[]
   };
   if(_editId){ const i=quotes.findIndex(x=>x.id===_editId); if(i>-1) quotes[i]=q; else quotes.push(q); }
   else quotes.push(q);
@@ -631,8 +670,6 @@ function renderQuoteDetail(id){
   const quotes=load(); const q=quotes.find(x=>x.id===id);
   if(!q){ nav('quotes'); return; }
   const t=calcTotal(q);
-  // toolbar
-  const tb=document.getElementById('detail-toolbar');
   let actions='';
   if(q.status==='draft'){
     actions+=`<button class="btn btn-ghost" onclick="nav('quote-edit','${q.id}')">✏️ Edit</button>`;
@@ -640,13 +677,13 @@ function renderQuoteDetail(id){
   }
   if(q.status==='sent'){
     actions+=`<button class="btn btn-ghost" onclick="nav('quote-edit','${q.id}')">✏️ Edit</button>`;
-    actions+=`<button class="btn btn-green" onclick="confirmAction('Approve this quote?','This will unlock the Allowables tracker for site use.','Approve',()=>markStatus(\'${q.id}\',\'approved\'))">✅ Approve</button>`;
-    actions+=`<button class="btn btn-red" onclick="confirmAction('Reject this quote?','The quote will be marked as rejected.','Reject',()=>markStatus(\'${q.id}\',\'rejected\'))">✖ Reject</button>`;
+    actions+=`<button class="btn btn-green" onclick="confirmAction('Approve this quote?','The journal will be created automatically and the site team can start logging daily sheets.','Approve',()=>markStatus('${q.id}','approved'))">✅ Approve</button>`;
+    actions+=`<button class="btn btn-red" onclick="confirmAction('Reject this quote?','The quote will be marked as rejected.','Reject',()=>markStatus('${q.id}','rejected'))">✖ Reject</button>`;
   }
   if(q.status==='approved'||q.status==='active'){
-    actions+=`<button class="btn btn-yellow" onclick="nav('allowables','${q.id}')">📊 Allowables &amp; Site</button>`;
+    actions+=`<button class="btn btn-yellow" onclick="nav('allowables','${q.id}')">📊 Journal &amp; Site</button>`;
   }
-  tb.innerHTML=`
+  document.getElementById('detail-toolbar').innerHTML=`
     <button class="btn btn-ghost btn-sm" onclick="nav('quotes')">← Back</button>
     <span class="badge s-${q.status}" style="font-size:13px;padding:6px 14px">${q.status.toUpperCase()}</span>
     <strong style="font-size:14px">${q.number} — ${q.client}</strong>
@@ -655,29 +692,26 @@ function renderQuoteDetail(id){
     <button class="btn btn-ghost btn-sm" onclick="window.print()">🖨 Print</button>
     <button class="btn btn-red btn-sm" onclick="confirmAction('Delete this quote?','This cannot be undone.','Delete',()=>deleteQuote('${q.id}'))">🗑 Delete</button>`;
 
-  // paper
   let rows='';
   (q.sections||[]).forEach(sec=>{
     rows+=`<tr class="sec-hd"><td colspan="5">${sec.name}</td></tr>`;
     (sec.items||[]).forEach(it=>{
       const cost=(+it.labour||0)+(+it.transport||0)+(+it.material||0)+(+it.plant||0);
       const rate=r2(cost*(1+(+q.markup||15)/100));
-      const amt=r2(rate*(+it.qty||0));
-      rows+=`<tr><td>${it.desc}</td><td>${it.unit}</td><td>${(+it.qty||0).toFixed(2)}</td><td>${fR(rate)}</td><td>${fR(amt)}</td></tr>`;
+      rows+=`<tr><td>${it.desc}</td><td>${it.unit}</td><td>${(+it.qty||0).toFixed(2)}</td><td>${fR(rate)}</td><td>${fR(r2(rate*(+it.qty||0)))}</td></tr>`;
     });
   });
-  let watermark='';
-  if(q.status==='approved') watermark=`<div class="status-watermark"><span style="background:#dcfce7;color:#166534;font-size:16px;letter-spacing:3px">✅ APPROVED</span></div>`;
-  if(q.status==='rejected') watermark=`<div class="status-watermark"><span style="background:#fee2e2;color:#991b1b;font-size:16px;letter-spacing:3px">✖ REJECTED</span></div>`;
+  let wm='';
+  if(q.status==='approved') wm=`<div class="status-watermark"><span style="background:#dcfce7;color:#166534;font-size:16px;letter-spacing:3px">✅ APPROVED</span></div>`;
+  if(q.status==='rejected') wm=`<div class="status-watermark"><span style="background:#fee2e2;color:#991b1b;font-size:16px;letter-spacing:3px">✖ REJECTED</span></div>`;
   document.getElementById('quote-paper').innerHTML=`
     <div class="qp-head">
-      <div class="qp-logo-row">
-        <div class="qp-logo">SC</div>
+      <div class="qp-logo-row"><div class="qp-logo">SC</div>
         <div><div class="qp-cname">Summertree Civils</div><div class="qp-creg">CK 2016/304170/07 &bull; VAT No 471 027 4319</div></div>
       </div>
       <div class="qp-contact">P.O. Box 110, Jeffreys Bay<br>Tel: 072 263 4470<br>waldo@summertree.org.za<br><strong>From: Waldo van Niekerk</strong></div>
     </div>
-    ${watermark}
+    ${wm}
     <div class="qp-badge">ESTIMATE — ${q.number}</div>
     <div class="qp-meta">
       <div>
@@ -697,17 +731,14 @@ function renderQuoteDetail(id){
       </tr></thead>
       <tbody>${rows}</tbody>
     </table>
-    <div class="qt-totals">
-      <div class="qt-inner">
-        <div class="trow"><span class="tl">Total Value of Work</span><span>${fR(t.sub)}</span></div>
-        <div class="trow"><span class="tl">Add VAT 15%</span><span>${fR(t.vat)}</span></div>
-        <div class="trow grand"><span class="tl">TOTAL OFFER AMOUNT</span><span>${fR(t.grand)}</span></div>
-      </div>
-    </div>
+    <div class="qt-totals"><div class="qt-inner">
+      <div class="trow"><span class="tl">Total Value of Work</span><span>${fR(t.sub)}</span></div>
+      <div class="trow"><span class="tl">Add VAT 15%</span><span>${fR(t.vat)}</span></div>
+      <div class="trow grand"><span class="tl">TOTAL OFFER AMOUNT</span><span>${fR(t.grand)}</span></div>
+    </div></div>
     <div class="qp-footer">
       <ul class="terms-list">${(q.terms||'').split('\n').filter(Boolean).map(l=>`<li>${l}</li>`).join('')}</ul>
-      <div class="bank-box">
-        <h4>BANK DETAILS</h4>
+      <div class="bank-box"><h4>BANK DETAILS</h4>
         <p>Summertree Civils<br>FNB — Jeffreys Bay<br>Branch: 210515<br>Acc: 62 853 125 104</p>
       </div>
     </div>
@@ -716,139 +747,240 @@ function renderQuoteDetail(id){
       <div><div class="sig-line">Date: ___________________________</div></div>
     </div>`;
 }
+
 function markStatus(id,status){
   const quotes=load(); const i=quotes.findIndex(x=>x.id===id);
-  if(i>-1){ quotes[i].status=status; save(quotes); }
+  if(i>-1){
+    quotes[i].status=status;
+    // Auto-build journal on first approval so site team can use it immediately
+    if(status==='approved' && !quotes[i].journal){
+      quotes[i].journal=buildJournal(quotes[i]);
+    }
+    save(quotes);
+  }
   closeModal();
   if(status==='approved') nav('allowables',id);
   else renderQuoteDetail(id);
 }
 function deleteQuote(id){
-  const quotes=load().filter(x=>x.id!==id); save(quotes);
+  save(load().filter(x=>x.id!==id));
   closeModal(); nav('quotes');
 }
 
 // ═══════════════════════════════════════════════════════
-// ALLOWABLES
+// ALLOWABLES VIEW
 // ═══════════════════════════════════════════════════════
 function renderAllowables(id){
   const quotes=load(); const q=quotes.find(x=>x.id===id);
   if(!q) return;
-  document.getElementById('allow-title').textContent=`Allowables — ${q.number}: ${q.client}`;
+  document.getElementById('allow-title').textContent=`Journal — ${q.number}: ${q.client}`;
   document.getElementById('allow-sub').textContent=`Site: ${q.site||''} | Markup: ${q.markup}%`;
+  document.getElementById('allow-back-btn').onclick=()=>nav('quote-detail',id);
+  document.getElementById('allow-new-sheet-btn').onclick=()=>openDailySelect(id);
+
   const t=calcTotal(q);
-  // meta cards
   const sheets=q.dailySheets||[];
-  const totalProfit=sheets.reduce((a,s)=>a+(+s.profitLoss||0),0);
+  const totalPL=sheets.reduce((a,s)=>a+(+s.profitLoss||0),0);
   document.getElementById('allow-meta').innerHTML=`
     <div class="am-card"><div class="am-val">${fR(t.sub)}</div><div class="am-lbl">Quote Value (ex-VAT)</div></div>
     <div class="am-card"><div class="am-val">${fR(t.grand)}</div><div class="am-lbl">Quote Value (incl. VAT)</div></div>
-    <div class="am-card"><div class="am-val">${sheets.length}</div><div class="am-lbl">Daily Sheets Recorded</div></div>
-    <div class="am-card"><div class="am-val" style="color:${totalProfit>=0?'#166534':'#991b1b'}">${fR(Math.abs(totalProfit))}</div><div class="am-lbl">${totalProfit>=0?'Total Profit':'Total Loss'} to Date</div></div>`;
-  // allowables table
+    <div class="am-card"><div class="am-val">${sheets.length}</div><div class="am-lbl">Daily Sheets</div></div>
+    <div class="am-card"><div class="am-val" style="color:${totalPL>=0?'#166534':'#991b1b'}">${fR(Math.abs(totalPL))}</div>
+      <div class="am-lbl">${totalPL>=0?'Total Profit':'Total Loss'} to Date</div></div>`;
+
+  // Journal progress table
+  const progress=journalProgress(q);
   let tHTML=`<thead><tr>
-    <th>DESCRIPTION</th><th>UNIT</th><th>QTY</th>
-    <th>LABOUR/unit</th><th>TRANSPORT/unit</th><th>MATERIAL/unit</th><th>PLANT/unit</th>
-    <th>TOTAL ALLOW/unit</th><th>MARKUP</th><th>CUSTOMER RATE</th><th>PROFIT/unit</th>
+    <th>OPERATION</th><th>UNIT</th><th>QTY QUOTED</th><th>QTY DONE</th><th>PROGRESS</th>
+    <th>LABOUR ALLOW/unit</th><th>PLANT ALLOW/unit</th><th>TOTAL ALLOW/unit</th><th>MARKUP</th><th>CUSTOMER RATE</th>
   </tr></thead><tbody>`;
-  (q.sections||[]).forEach(sec=>{
-    tHTML+=`<tr class="as-hd"><td colspan="11">${sec.name}</td></tr>`;
-    (sec.items||[]).forEach(it=>{
-      const cost=(+it.labour||0)+(+it.transport||0)+(+it.material||0)+(+it.plant||0);
-      const rate=r2(cost*(1+(+q.markup||15)/100));
-      const profit=r2(cost*(+q.markup||15)/100);
-      tHTML+=`<tr>
-        <td>${it.desc}</td><td>${it.unit}</td><td>${(+it.qty||0).toFixed(2)}</td>
-        <td>${it.labour>0?fR(it.labour):'—'}</td><td>${it.transport>0?fR(it.transport):'—'}</td>
-        <td>${it.material>0?fR(it.material):'—'}</td><td>${it.plant>0?fR(it.plant):'—'}</td>
-        <td style="font-weight:600">${fR(cost)}</td>
-        <td>${q.markup}%</td>
-        <td style="font-weight:600">${fR(rate)}</td>
-        <td style="color:#166534">${fR(profit)}</td>
-      </tr>`;
-    });
+  let lastSec='';
+  (q.journal||[]).forEach(ji=>{
+    if(ji.section!==lastSec){
+      lastSec=ji.section;
+      tHTML+=`<tr class="as-hd"><td colspan="10">${ji.section}</td></tr>`;
+    }
+    const done=progress[ji.id]||0;
+    const pct=ji.qtyQuoted>0?Math.min(Math.round((done/ji.qtyQuoted)*100),100):0;
+    const cls=pct>=100?'over':pct>=80?'warn':'';
+    const rate=r2(ji.allowTotal*(1+(+q.markup||15)/100));
+    tHTML+=`<tr>
+      <td>${ji.desc}</td><td>${ji.unit}</td>
+      <td>${ji.qtyQuoted.toFixed(2)}</td>
+      <td>${done.toFixed(2)}</td>
+      <td>
+        <div class="prog-bar"><div class="prog-fill ${cls}" style="width:${pct}%"></div></div>
+        <div style="font-size:10px;color:var(--gray);margin-top:3px;text-align:center">${pct}%</div>
+      </td>
+      <td>${ji.labourAllow>0?fR(ji.labourAllow):'—'}</td>
+      <td>${ji.plantAllow>0?fR(ji.plantAllow):'—'}</td>
+      <td style="font-weight:600">${fR(ji.allowTotal)}</td>
+      <td>${q.markup}%</td>
+      <td style="font-weight:600">${fR(rate)}</td>
+    </tr>`;
   });
   tHTML+=`</tbody>`;
   document.getElementById('allow-table').innerHTML=tHTML;
-  // daily sheets list
+
+  // Daily sheets list
   const dsc=document.getElementById('ds-list-container');
   if(!sheets.length){
-    dsc.innerHTML=`<div class="empty"><div class="empty-icon">📋</div><h3>No daily sheets yet</h3><p>Site supervisors can add daily plant &amp; labour records here.</p></div>`;
+    dsc.innerHTML=`<div class="empty"><div class="empty-icon">📋</div><h3>No daily sheets yet</h3>
+      <p>Click <strong>+ New Daily Sheet</strong> to log today's work against the journal.</p></div>`;
   } else {
     dsc.innerHTML=`<div class="ds-list">${sheets.slice().reverse().map(s=>{
       const pl=+s.profitLoss||0;
+      const opNames=(s.operations||[]).filter(o=>o.desc).map(o=>o.desc).slice(0,3).join(', ');
       return `<div class="ds-item" onclick="openDailyEntry('${id}','${s.id}')">
         <div class="dsi-date">${s.date||''}</div>
-        <div class="dsi-sup">${s.supervisor||'Unknown supervisor'}</div>
-        <div style="font-size:12px;color:var(--gray);flex:1">${s.diary?s.diary.slice(0,60)+'…':''}</div>
+        <div class="dsi-sup">${s.supervisor||'—'}</div>
+        <div style="font-size:11px;color:var(--gray);flex:1">${opNames||s.diary?.slice(0,60)||''}</div>
         <div class="dsi-profit ${pl>=0?'pos':'neg'}">${pl>=0?'Profit':'Loss'}: ${fR(Math.abs(pl))}</div>
         <button class="btn btn-xs btn-red" onclick="event.stopPropagation();deleteSheet('${id}','${s.id}')">✕</button>
       </div>`;
     }).join('')}</div>`;
   }
-  // store current quote id for back button
-  document.getElementById('de-back-btn').onclick=()=>nav('allowables',id);
 }
 function deleteSheet(qid,sid){
   confirmAction('Delete this daily sheet?','This cannot be undone.','Delete',()=>{
     const quotes=load(); const qi=quotes.findIndex(x=>x.id===qid);
-    if(qi>-1){ quotes[qi].dailySheets=(quotes[qi].dailySheets||[]).filter(s=>s.id!==sid); save(quotes); }
-    closeModal(); renderAllowables(qid);
+    if(qi>-1) quotes[qi].dailySheets=(quotes[qi].dailySheets||[]).filter(s=>s.id!==sid);
+    save(quotes); closeModal(); renderAllowables(qid);
   });
 }
 
 // ═══════════════════════════════════════════════════════
-// DAILY ENTRY
+// OPERATION SELECTOR (shown before new daily sheet)
 // ═══════════════════════════════════════════════════════
-let _deQuoteId=null;
-function openDailyEntry(qid,sheetId){
-  _deQuoteId=qid;
-  document.getElementById('de-quote-id').value=qid||'';
-  document.getElementById('de-sheet-id').value=sheetId||'';
+function openDailySelect(qid){
   const quotes=load(); const q=quotes.find(x=>x.id===qid);
-  document.getElementById('de-sub').textContent=`${q?q.number+' — '+q.client:''}`;
+  if(!q||!q.journal) return;
+  document.getElementById('ds-sel-qid').value=qid;
+  document.getElementById('ds-sel-sub').textContent=`${q.number} — ${q.client} | Select what the team is working on today`;
+  document.getElementById('ds-sel-back').onclick=()=>nav('allowables',qid);
+
+  const progress=journalProgress(q);
+  const list=document.getElementById('op-sel-list');
+  list.innerHTML='';
+  let lastSec='';
+
+  q.journal.forEach(ji=>{
+    if(ji.section!==lastSec){
+      lastSec=ji.section;
+      const sh=document.createElement('div');
+      sh.className='op-sel-sec';
+      sh.textContent=ji.section;
+      list.appendChild(sh);
+    }
+    const done=progress[ji.id]||0;
+    const pct=ji.qtyQuoted>0?Math.round((done/ji.qtyQuoted)*100):0;
+    const cls=pct>=100?'over':pct>=80?'warn':'';
+    const complete=pct>=100;
+
+    const div=document.createElement('div');
+    div.className='op-sel-item'+(complete?'':' checked');
+    div.dataset.jid=ji.id;
+    div.innerHTML=`
+      <input type="checkbox" ${complete?'':'checked'} data-id="${ji.id}"/>
+      <div class="op-sel-desc">
+        <strong>${ji.desc}</strong>
+        <span>${ji.unit} — Allow: ${fR(ji.allowTotal)}/unit</span>
+        <div class="op-sel-prog">
+          <div class="op-sel-prog-bar"><div class="op-sel-prog-fill ${cls}" style="width:${Math.min(pct,100)}%"></div></div>
+          <div class="op-sel-prog-text">${done.toFixed(1)} / ${ji.qtyQuoted.toFixed(1)} ${ji.unit} done (${pct}%)</div>
+        </div>
+      </div>
+      <div class="op-sel-meta">
+        Labour: ${fR(ji.labourAllow)}/unit<br>
+        Plant: ${fR(ji.plantAllow)}/unit<br>
+        <strong>${fR(ji.allowTotal)}/unit</strong>
+      </div>`;
+
+    const cb=div.querySelector('input');
+    cb.addEventListener('change',function(){ div.classList.toggle('checked',this.checked); });
+    div.addEventListener('click',function(e){
+      if(e.target.tagName==='INPUT') return;
+      cb.checked=!cb.checked;
+      div.classList.toggle('checked',cb.checked);
+    });
+    list.appendChild(div);
+  });
+  nav('daily-select');
+}
+function selAll(checked){
+  document.querySelectorAll('#op-sel-list input[type=checkbox]').forEach(cb=>{
+    cb.checked=checked;
+    cb.closest('.op-sel-item').classList.toggle('checked',checked);
+  });
+}
+function startNewDailySheet(){
+  const qid=document.getElementById('ds-sel-qid').value;
+  const selectedIds=[...document.querySelectorAll('#op-sel-list input[type=checkbox]:checked')].map(cb=>cb.dataset.id);
+  if(!selectedIds.length){ alert('Please select at least one operation.'); return; }
+  openDailyEntry(qid, null, selectedIds);
+}
+
+// ═══════════════════════════════════════════════════════
+// DAILY ENTRY FORM
+// ═══════════════════════════════════════════════════════
+function openDailyEntry(qid, sheetId, selectedIds){
+  const quotes=load(); const q=quotes.find(x=>x.id===qid);
+  if(!q) return;
+  document.getElementById('de-quote-id').value=qid;
+  document.getElementById('de-sheet-id').value=sheetId||'';
+  document.getElementById('de-sub').textContent=`${q.number} — ${q.client}`;
+  document.getElementById('de-back-btn').onclick=sheetId
+    ? ()=>nav('allowables',qid)
+    : ()=>openDailySelect(qid);
 
   let sheet={};
-  if(sheetId && q){ sheet=(q.dailySheets||[]).find(s=>s.id===sheetId)||{}; }
+  if(sheetId) sheet=(q.dailySheets||[]).find(s=>s.id===sheetId)||{};
+
   document.getElementById('de-supervisor').value=sheet.supervisor||'';
-  document.getElementById('de-contract').value=sheet.contract||q?.number||'';
+  document.getElementById('de-contract').value=sheet.contract||q.number||'';
   document.getElementById('de-date').value=sheet.date||new Date().toISOString().slice(0,10);
   document.getElementById('de-diary').value=sheet.diary||'';
 
-  // allowables rows from quote operations
+  // Determine which journal items to show
+  const journal=q.journal||[];
+  let items;
+  if(sheetId){
+    // Editing: restore the exact items that were on this sheet
+    const savedJids=new Set((sheet.operations||[]).map(op=>op.journalId).filter(Boolean));
+    items=savedJids.size ? journal.filter(ji=>savedJids.has(ji.id)) : journal;
+  } else {
+    // New sheet: show only what the supervisor selected
+    const selSet=new Set(selectedIds||[]);
+    items=selSet.size ? journal.filter(ji=>selSet.has(ji.id)) : journal;
+  }
+
+  // Build allowables table
   const tbody=document.getElementById('de-allow-body');
   tbody.innerHTML='';
-  const savedOps=sheet.operations||[];
-  if(q){
-    let allItems=[];
-    (q.sections||[]).forEach(sec=>{
-      (sec.items||[]).forEach(it=>{
-        const cost=(+it.labour||0)+(+it.transport||0)+(+it.material||0)+(+it.plant||0);
-        allItems.push({desc:it.desc,labour:it.labour||0,plant:it.plant||0,allowTotal:cost});
-      });
-    });
-    allItems.forEach((it,i)=>{
-      const saved=savedOps[i]||{};
-      const tr=document.createElement('tr');
-      tr.innerHTML=`
-        <td><input type="text" value="${it.desc}" readonly style="color:var(--gray)"/></td>
-        <td><input type="text" class="op-product" value="${saved.product||''}"/></td>
-        <td><input type="number" class="op-la" value="${saved.la||it.labour||''}" min="0" step="0.01" oninput="calcDaily()"/></td>
-        <td><input type="number" class="op-lt" value="${saved.lt||''}" min="0" step="0.01" oninput="calcDaily()"/></td>
-        <td><input type="number" class="op-pa" value="${saved.pa||it.plant||''}" min="0" step="0.01" oninput="calcDaily()"/></td>
-        <td><input type="number" class="op-pt" value="${saved.pt||''}" min="0" step="0.01" oninput="calcDaily()"/></td>`;
-      tbody.appendChild(tr);
-    });
-  }
-  // add blank rows if no items
-  if(!tbody.children.length){
-    for(let i=0;i<5;i++){
-      const tr=document.createElement('tr');
-      tr.innerHTML=`<td><input type="text" class="op-desc" placeholder="Operation"/></td><td><input type="text" class="op-product" placeholder="Product"/></td><td><input type="number" class="op-la" min="0" step="0.01" oninput="calcDaily()"/></td><td><input type="number" class="op-lt" min="0" step="0.01" oninput="calcDaily()"/></td><td><input type="number" class="op-pa" min="0" step="0.01" oninput="calcDaily()"/></td><td><input type="number" class="op-pt" min="0" step="0.01" oninput="calcDaily()"/></td>`;
-      tbody.appendChild(tr);
+  let lastSec='';
+  items.forEach(ji=>{
+    if(ji.section!==lastSec){
+      lastSec=ji.section;
+      const hr=document.createElement('tr');
+      hr.className='tr-sec';
+      hr.innerHTML=`<td colspan="7">${ji.section}</td>`;
+      tbody.appendChild(hr);
     }
-  }
-  // labour rows
+    const saved=(sheet.operations||[]).find(op=>op.journalId===ji.id)||{};
+    const tr=document.createElement('tr');
+    tr.className='op-row';
+    tr.innerHTML=`
+      <td><input type="text" value="${ji.desc}" readonly style="color:#374151;font-weight:500"/></td>
+      <td><input type="text" class="op-product" value="${saved.product||''}"/></td>
+      <td><input type="number" class="op-qty" data-jid="${ji.id}" value="${saved.qty||''}" min="0" step="0.01" oninput="calcDaily()" placeholder="0"/></td>
+      <td><input type="number" class="op-la" value="${saved.la!==undefined?saved.la:ji.labourAllow||''}" min="0" step="0.01" oninput="calcDaily()"/></td>
+      <td><input type="number" class="op-lt" value="${saved.lt||''}" min="0" step="0.01" oninput="calcDaily()"/></td>
+      <td><input type="number" class="op-pa" value="${saved.pa!==undefined?saved.pa:ji.plantAllow||''}" min="0" step="0.01" oninput="calcDaily()"/></td>
+      <td><input type="number" class="op-pt" value="${saved.pt||''}" min="0" step="0.01" oninput="calcDaily()"/></td>`;
+    tbody.appendChild(tr);
+  });
+
+  // Labour table
   const lbody=document.getElementById('de-labour-body');
   lbody.innerHTML='';
   const savedLabour=sheet.labourRows||[{},{},{},{},{}];
@@ -862,49 +994,45 @@ function openDailyEntry(qid,sheetId){
       <td class="lr-sub" style="font-weight:600;padding:0 8px"></td>`;
     lbody.appendChild(tr);
   });
-  // add extra empty labour row button
-  const addBtn=document.createElement('tr');
-  addBtn.innerHTML=`<td colspan="5" style="text-align:left;padding:4px 6px"><button class="add-row-btn" onclick="addLabourRow()">+ Add worker</button></td>`;
-  lbody.appendChild(addBtn);
+  const addRow=document.createElement('tr');
+  addRow.innerHTML=`<td colspan="5" style="padding:4px 6px"><button class="add-row-btn" onclick="addLabourRow()">+ Add worker</button></td>`;
+  lbody.appendChild(addRow);
 
   calcDaily();
   nav('daily-entry');
 }
 function addLabourRow(){
   const lbody=document.getElementById('de-labour-body');
-  const addBtnRow=lbody.lastChild;
+  const btn=lbody.lastChild;
   const tr=document.createElement('tr');
   tr.innerHTML=`<td><input type="text" class="lr-desc" placeholder="e.g. General worker"/></td><td><input type="number" class="lr-qty" min="0" step="1" oninput="calcDaily()"/></td><td><input type="number" class="lr-hrs" min="0" step="0.5" oninput="calcDaily()"/></td><td><input type="number" class="lr-rate" min="0" step="0.01" oninput="calcDaily()"/></td><td class="lr-sub" style="font-weight:600;padding:0 8px"></td>`;
-  lbody.insertBefore(tr,addBtnRow);
+  lbody.insertBefore(tr,btn);
 }
 function calcDaily(){
   let la=0,pa=0;
   document.querySelectorAll('.op-la').forEach(el=>la+=parseFloat(el.value)||0);
   document.querySelectorAll('.op-pa').forEach(el=>pa+=parseFloat(el.value)||0);
-  const totalAllow=la+pa;
   document.getElementById('de-la-tot').textContent=fR(la);
   document.getElementById('de-pa-tot').textContent=fR(pa);
   let lc=0;
   const qtys=[...document.querySelectorAll('.lr-qty')];
   const hrss=[...document.querySelectorAll('.lr-hrs')];
   const rates=[...document.querySelectorAll('.lr-rate')];
-  const subs=[...document.querySelectorAll('.lr-sub')];
-  qtys.forEach((q,i)=>{
-    const sub=(parseFloat(q.value)||0)*(parseFloat(hrss[i]?.value)||0)*(parseFloat(rates[i]?.value)||0);
-    if(subs[i]) subs[i].textContent=sub>0?fR(sub):'';
-    lc+=sub;
+  [...document.querySelectorAll('.lr-sub')].forEach((sub,i)=>{
+    const val=(parseFloat(qtys[i]?.value)||0)*(parseFloat(hrss[i]?.value)||0)*(parseFloat(rates[i]?.value)||0);
+    sub.textContent=val>0?fR(val):'';
+    lc+=val;
   });
   document.getElementById('de-lc-tot').textContent=fR(lc);
-  const profit=Math.max(0,totalAllow-lc);
-  const loss=Math.max(0,lc-totalAllow);
-  const profitLoss=r2(totalAllow-lc);
+  const totalAllow=la+pa;
+  const pl=r2(totalAllow-lc);
   document.getElementById('de-summary').innerHTML=`
     <div class="dss-card dss-all"><div class="dss-label">① Labour Allowable</div><div class="dss-value">${fR(la)}</div></div>
     <div class="dss-card dss-all"><div class="dss-label">② Plant Allowable</div><div class="dss-value">${fR(pa)}</div></div>
     <div class="dss-card dss-cost"><div class="dss-label">③ Labour Cost</div><div class="dss-value">${fR(lc)}</div></div>
-    <div class="dss-card ${profitLoss>=0?'dss-profit':'dss-loss'}"><div class="dss-label">PROFIT</div><div class="dss-value">${fR(profit)}</div></div>
-    <div class="dss-card ${profitLoss>=0?'dss-profit':'dss-loss'}"><div class="dss-label">LOSS</div><div class="dss-value">${fR(loss)}</div></div>
-    <div class="dss-card dss-net"><div class="dss-label">NET</div><div class="dss-value">${fR(profitLoss)}</div></div>`;
+    <div class="dss-card ${pl>=0?'dss-profit':'dss-loss'}"><div class="dss-label">PROFIT</div><div class="dss-value">${fR(Math.max(0,pl))}</div></div>
+    <div class="dss-card ${pl>=0?'dss-profit':'dss-loss'}"><div class="dss-label">LOSS</div><div class="dss-value">${fR(Math.max(0,-pl))}</div></div>
+    <div class="dss-card dss-net"><div class="dss-label">NET</div><div class="dss-value">${fR(pl)}</div></div>`;
 }
 function saveDailySheet(){
   const qid=document.getElementById('de-quote-id').value;
@@ -917,8 +1045,13 @@ function saveDailySheet(){
   const hrss=[...document.querySelectorAll('.lr-hrs')];
   const rates=[...document.querySelectorAll('.lr-rate')];
   qtys.forEach((q,i)=>lc+=(parseFloat(q.value)||0)*(parseFloat(hrss[i]?.value)||0)*(parseFloat(rates[i]?.value)||0));
-  const operations=[...document.querySelectorAll('#de-allow-body tr')].map(tr=>({
+
+  // Save operations — include journalId and qty so journal progress updates
+  const operations=[...document.querySelectorAll('#de-allow-body tr.op-row')].map(tr=>({
+    journalId:tr.querySelector('.op-qty')?.dataset.jid||'',
+    desc:tr.querySelector('td:first-child input')?.value||'',
     product:tr.querySelector('.op-product')?.value||'',
+    qty:parseFloat(tr.querySelector('.op-qty')?.value)||0,
     la:parseFloat(tr.querySelector('.op-la')?.value)||0,
     lt:parseFloat(tr.querySelector('.op-lt')?.value)||0,
     pa:parseFloat(tr.querySelector('.op-pa')?.value)||0,
@@ -930,14 +1063,15 @@ function saveDailySheet(){
     hrs:parseFloat(hrss[i]?.value)||0,
     rate:parseFloat(rates[i]?.value)||0,
   })).filter(r=>r.desc);
+
   const sheet={
     id:sid||uid(),
     supervisor:document.getElementById('de-supervisor').value,
     contract:document.getElementById('de-contract').value,
     date:document.getElementById('de-date').value,
     diary:document.getElementById('de-diary').value,
-    operations,labourRows,
-    labourAllow:r2(la),plantAllow:r2(pa),labourCost:r2(lc),
+    operations, labourRows,
+    labourAllow:r2(la), plantAllow:r2(pa), labourCost:r2(lc),
     profitLoss:r2(la+pa-lc)
   };
   const sheets=quotes[qi].dailySheets||[];
@@ -966,7 +1100,6 @@ function closeModal(){ document.getElementById('confirm-modal').classList.remove
 document.getElementById('cm-ok').onclick=()=>{ if(_modalCb) _modalCb(); };
 document.getElementById('confirm-modal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeModal(); });
 
-// ── BOOT ──
 nav('dashboard');
 </script>
 </body>
